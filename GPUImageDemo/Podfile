@@ -9,4 +9,5 @@ target 'GPUImageDemo' do
 	pod 'GPUImage'
     pod 'Masonry'
     pod 'TZImagePickerController'
+    pod 'TYCyclePagerView'
 end

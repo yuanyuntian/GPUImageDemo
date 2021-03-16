@@ -17,6 +17,7 @@
 @property(nonatomic, weak)IBOutlet UIImageView * imageView;
 @property(nonatomic, strong) TYCyclePagerView * menu;
 @property(nonatomic, strong) NSArray * items;
+@property(nonatomic, strong) UIImage * sourceImage;
 
 @end
 
@@ -26,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.menu];
-    self.items = @[@"1",@"1",@"1",@"1"];
+    self.items = @[@"中间突出 四周暗",@"红",@"蓝",@"绿",@"怀旧",@"朦胧加暗",@"饱和",@"亮度",@"曝光度",@"素描",@"卡通",@"Instagram风格"];
     [self.menu reloadData];
 }
 
@@ -73,7 +74,8 @@
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        self.imageView.image = photos.firstObject;
+        self.sourceImage = photos.firstObject;
+        self.imageView.image = self.sourceImage;
         self.add.hidden = true;
     }];
 }
@@ -111,6 +113,163 @@
             [filter useNextFrameForImageCapture];
             
             GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 1:{
+            //red
+            GPUImageRGBFilter *filter = [GPUImageRGBFilter new];
+            filter.red = 0.9;
+            filter.green = 0.8;
+            filter.blue = 0.9;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 2:{
+            //blue
+            GPUImageRGBFilter *filter = [GPUImageRGBFilter new];
+            filter.red = 0.8;
+            filter.green = 0.8;
+            filter.blue = 0.9;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 3:{
+            //绿
+            GPUImageRGBFilter *filter = [GPUImageRGBFilter new];
+            filter.red = 0.8;
+            filter.green = 0.9;
+            filter.blue = 0.8;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 4:{
+            //怀旧
+            GPUImageSepiaFilter *filter = [GPUImageSepiaFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 5:{
+            //朦胧加暗
+            GPUImageHazeFilter *filter = [GPUImageHazeFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 6:{
+            //饱和
+            GPUImageSaturationFilter *filter = [GPUImageSaturationFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 7:{
+            //亮度
+            GPUImageBrightnessFilter *filter = [GPUImageBrightnessFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 8:{
+            //曝光度
+            GPUImageExposureFilter *filter = [GPUImageExposureFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 9:{
+            //素描
+            GPUImageSketchFilter *filter = [GPUImageSketchFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 10:{
+            //卡通
+            GPUImageSmoothToonFilter *filter = [GPUImageSmoothToonFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 11:{
+            //中间突出  四周暗
+            GPUImageVignetteFilter *filter = [GPUImageVignetteFilter new];
+//            GPUVector3()
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
         }
         break;
         default:
@@ -119,6 +278,12 @@
     return nil;
 }
 
+- (void)pagerView:(TYCyclePagerView *)pageView didSelectedItemCell:(__kindof UICollectionViewCell *)cell atIndex:(NSInteger)index {
+    if (self.sourceImage == nil) {
+        return;
+    }
+    self.imageView.image = [self hightLightImage:self.sourceImage withType:index];
+}
 
 
 @end

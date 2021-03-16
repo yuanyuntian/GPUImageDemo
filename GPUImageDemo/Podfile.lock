@@ -1,24 +1,28 @@
 PODS:
   - GPUImage (0.1.7)
   - Masonry (1.1.0)
+  - TYCyclePagerView (1.2.0)
   - TZImagePickerController (3.5.8)
 
 DEPENDENCIES:
   - GPUImage
   - Masonry
+  - TYCyclePagerView
   - TZImagePickerController
 
 SPEC REPOS:
   trunk:
     - GPUImage
     - Masonry
+    - TYCyclePagerView
     - TZImagePickerController
 
 SPEC CHECKSUMS:
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   TZImagePickerController: 7fd9702897ef8c0b7c951e5463f4bcf398296f9e
 
-PODFILE CHECKSUM: bdd8d1b59237a833c73bad52290ace0e66220187
+PODFILE CHECKSUM: 1d429866b0c52d56a362cfb39e3e9b399698fb3b
 
 COCOAPODS: 1.10.0

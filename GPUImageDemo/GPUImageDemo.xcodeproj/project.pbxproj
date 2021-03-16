@@ -15,6 +15,7 @@
 		8622AC9C25FF66890047AB11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8622AC9A25FF66890047AB11 /* LaunchScreen.storyboard */; };
 		8622AC9F25FF66890047AB11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9E25FF66890047AB11 /* main.m */; };
 		8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673933A25FF703400C13B07 /* PTImageEditViewController.m */; };
+		8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */; };
 		B604D76C73FF27214C670E0A /* Pods_GPUImageDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,8 @@
 		8622AC9E25FF66890047AB11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8673933925FF703400C13B07 /* PTImageEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageEditViewController.h; sourceTree = "<group>"; };
 		8673933A25FF703400C13B07 /* PTImageEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageEditViewController.m; sourceTree = "<group>"; };
+		867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYCyclePagerViewCell.m; sourceTree = "<group>"; };
+		867394492600B3F800C13B07 /* TYCyclePagerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYCyclePagerViewCell.h; sourceTree = "<group>"; };
 		BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImageDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E395E8D73B5551E603A8AFC0 /* Pods-GPUImageDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImageDemo.debug.xcconfig"; path = "Target Support Files/Pods-GPUImageDemo/Pods-GPUImageDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +93,8 @@
 		8673933825FF700700C13B07 /* 图片处理 */ = {
 			isa = PBXGroup;
 			children = (
+				867394492600B3F800C13B07 /* TYCyclePagerViewCell.h */,
+				867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */,
 				8673933925FF703400C13B07 /* PTImageEditViewController.h */,
 				8673933A25FF703400C13B07 /* PTImageEditViewController.m */,
 			);
@@ -228,6 +233,7 @@
 			files = (
 				8622AC9425FF66880047AB11 /* ViewController.m in Sources */,
 				8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */,
+				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */,
 				8622AC9F25FF66890047AB11 /* main.m in Sources */,
 				8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */,
