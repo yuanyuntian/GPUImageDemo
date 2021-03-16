@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CE9461A2600EE0100246BFB /* PTImageEffectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE946192600EE0100246BFB /* PTImageEffectManager.m */; };
 		8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC8D25FF66880047AB11 /* AppDelegate.m */; };
 		8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9025FF66880047AB11 /* SceneDelegate.m */; };
 		8622AC9425FF66880047AB11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9325FF66880047AB11 /* ViewController.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4CE946182600EE0100246BFB /* PTImageEffectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageEffectManager.h; sourceTree = "<group>"; };
+		4CE946192600EE0100246BFB /* PTImageEffectManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageEffectManager.m; sourceTree = "<group>"; };
 		55B32804385010216EBACC50 /* Pods-GPUImageDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImageDemo.release.xcconfig"; path = "Target Support Files/Pods-GPUImageDemo/Pods-GPUImageDemo.release.xcconfig"; sourceTree = "<group>"; };
 		8622AC8925FF66880047AB11 /* GPUImageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPUImageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8622AC8C25FF66880047AB11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */,
 				8673933925FF703400C13B07 /* PTImageEditViewController.h */,
 				8673933A25FF703400C13B07 /* PTImageEditViewController.m */,
+				4CE946182600EE0100246BFB /* PTImageEffectManager.h */,
+				4CE946192600EE0100246BFB /* PTImageEffectManager.m */,
 			);
 			path = "图片处理";
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8622AC9425FF66880047AB11 /* ViewController.m in Sources */,
+				4CE9461A2600EE0100246BFB /* PTImageEffectManager.m in Sources */,
 				8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */,
 				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */,
