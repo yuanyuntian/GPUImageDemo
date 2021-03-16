@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.title = @"GPUImageDemo";
     // Do any additional setup after loading the view.
-    self.source = @[@"图片编辑",@"视频编辑"];
+    self.source = @[@"视觉效果",@"图像处理",@"调整颜色",@"混合模式",@"自定义滤镜",@"视频编辑"];
     [self.tableView reloadData];
 }
 
@@ -51,7 +51,7 @@
     UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     
     if (indexPath.row == 0) {
-        //图片处理
+        //视觉效果
         PTImageEditViewController * imageVC = [board instantiateViewControllerWithIdentifier:@"ImageEdit"];
         [self.navigationController pushViewController:imageVC animated:true];
 

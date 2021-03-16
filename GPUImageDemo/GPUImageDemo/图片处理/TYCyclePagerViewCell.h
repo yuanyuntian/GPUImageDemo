@@ -10,6 +10,6 @@
 
 @interface TYCyclePagerViewCell : UICollectionViewCell
 
-@property (nonatomic, weak, readonly) UILabel *label;
+@property (nonatomic, strong) UILabel *label;
 
 @end

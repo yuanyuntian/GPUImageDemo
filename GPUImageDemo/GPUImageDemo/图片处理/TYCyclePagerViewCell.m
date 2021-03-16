@@ -7,9 +7,9 @@
 //
 
 #import "TYCyclePagerViewCell.h"
+#import <Masonry/Masonry.h>
 
 @interface TYCyclePagerViewCell ()
-@property (nonatomic, weak) UILabel *label;
 @end
 
 @implementation TYCyclePagerViewCell
@@ -17,32 +17,26 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        [self addLabel];
+        
+        self.label  = [UILabel new];
+        self.label.textAlignment = NSTextAlignmentCenter;
+        self.label.textColor = [UIColor blackColor];
+        self.label.numberOfLines = 2;
+        self.label.font = [UIFont systemFontOfSize:16];
+        [self addSubview:self.label];
     }
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.backgroundColor = [UIColor clearColor];
-        [self addLabel];
-    }
-    return self;
-}
-
-
-- (void)addLabel {
-    UILabel *label = [[UILabel alloc]init];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:25];
-    [self addSubview:label];
-    _label = label;
-}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _label.frame = self.bounds;
+    
+    [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self);
+    }];
 }
+
+
 
 @end
