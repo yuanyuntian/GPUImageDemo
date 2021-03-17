@@ -357,4 +357,831 @@ static PTImageEffectManager * instance = nil;
     return nil;
 }
 
+
+-(UIImage*)visualProcessImage:(UIImage*)image withType:(NSInteger)type {
+    switch (type) {
+        case 0:{
+            //十字准线
+            return image;
+//            GPUImageCrosshairGenerator *crosshairGenerator = [GPUImageCrosshairGenerator new];
+//            crosshairGenerator.crosshairWidth = 15.0;
+//            [crosshairGenerator forceProcessingAtSize:image.size];
+//
+//            GPUImageHarrisCornerDetectionFilter *edgesDetector = [GPUImageHarrisCornerDetectionFilter new];
+//            [edgesDetector setCornersDetectedBlock:^(GLfloat* cornerArray, NSUInteger cornersDetected, CMTime frameTime){
+//                    [crosshairGenerator renderCrosshairsFromArray:cornerArray count:cornersDetected frameTime:frameTime];
+//                    NSLog(@"corners: %u", cornersDetected);
+//            }];
+//
+//            GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
+//            [blendFilter forceProcessingAtSize:image.size];
+//            [crosshairGenerator addTarget:blendFilter];
+//
+//            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+//            [stillImageSource addTarget:blendFilter];
+//
+//            [stillImageSource processImage];
+//            return [crosshairGenerator imageFromCurrentFramebuffer];
+        }
+        break;
+        case 1:{
+            //线条检测
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            GPUImageHoughTransformLineDetector *lineFilter = [[GPUImageHoughTransformLineDetector alloc] init];
+            [stillImageSource addTarget:lineFilter];
+            GPUImageLineGenerator *lineDrawFilter = [[GPUImageLineGenerator alloc] init];
+            [lineDrawFilter forceProcessingAtSize:image.size];
+            [lineFilter setLinesDetectedBlock:^(GLfloat *flt, NSUInteger count, CMTime time) {
+                NSLog(@"Number of lines: %ld", (unsigned long)count);
+                GPUImageAlphaBlendFilter *blendFilter = [GPUImageAlphaBlendFilter new];
+                [blendFilter forceProcessingAtSize:image.size];
+                [stillImageSource addTarget:blendFilter];
+                [lineDrawFilter addTarget:blendFilter];
+
+                [blendFilter useNextFrameForImageCapture];
+                [lineDrawFilter renderLinesFromArray:flt count:count frameTime:time];
+            }];
+            [stillImageSource processImage];
+            return image;
+        }
+        break;
+        case 2:{
+            //形状变化
+            //Z轴旋转
+            GPUImageTransformFilter *filter = [GPUImageTransformFilter new];
+            CATransform3D  transform = CATransform3DIdentity;
+            transform  = CATransform3DRotate(transform,40, 0.0, 0.0, 1.0);
+            filter.transform3D =transform;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;//GPUImageCropFilter
+        case 3:{
+            //裁剪
+            GPUImageCropFilter *filter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.5, 0.5, 1, 1)];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 4:{
+            //锐化
+            GPUImageSharpenFilter *filter = [GPUImageSharpenFilter new];
+            filter.sharpness = 2.0;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;//
+        case 5:{
+            //反遮罩锐化
+            GPUImageUnsharpMaskFilter *filter = [GPUImageUnsharpMaskFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+            
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 6:{
+            //模糊
+            GPUImageGaussianBlurFilter * filter = [GPUImageGaussianBlurFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 7:{
+            //高斯模糊
+            GPUImageGaussianBlurFilter * filter = [GPUImageGaussianBlurFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 8:{
+            //高斯模糊
+            GPUImageGaussianSelectiveBlurFilter * filter = [GPUImageGaussianSelectiveBlurFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 9:{
+            //盒状模糊
+            GPUImageBoxBlurFilter * filter = [GPUImageBoxBlurFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+        break;
+        case 10:{
+            //条纹模糊，中间清晰，上下两端模糊
+            GPUImageTiltShiftFilter * filter = [GPUImageTiltShiftFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 11:{
+            //中间值，有种稍微模糊边缘的效果
+            GPUImageMedianFilter * filter = [GPUImageMedianFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 12:{
+            //双边模糊
+            GPUImageBilateralFilter * filter = [GPUImageBilateralFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 13:{
+            //侵蚀边缘模糊，变黑白
+            GPUImageErosionFilter * filter = [GPUImageErosionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 14:{
+            //RGB侵蚀边缘模糊，有色彩
+            GPUImageRGBErosionFilter * filter = [GPUImageRGBErosionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 15:{
+            //扩展边缘模糊，变黑白
+            GPUImageDilationFilter * filter = [GPUImageDilationFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 16:{
+            //RGB扩展边缘模糊，有色彩
+            GPUImageRGBDilationFilter * filter = [GPUImageRGBDilationFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 17:{
+            //RGB侵蚀边缘模糊，有色彩
+            GPUImageRGBErosionFilter * filter = [GPUImageRGBErosionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 18:{
+            //黑白色调模糊
+            GPUImageOpeningFilter * filter = [GPUImageOpeningFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 19:{
+            //彩色模糊
+            GPUImageRGBOpeningFilter * filter = [GPUImageRGBOpeningFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 20:{
+            //黑白色调模糊，暗色会被提亮
+            GPUImageClosingFilter * filter = [GPUImageClosingFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 21:{
+            //彩色模糊，暗色会被提亮
+            GPUImageRGBClosingFilter * filter = [GPUImageRGBClosingFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 22:{
+            //Lanczos重取样，模糊效果
+            GPUImageLanczosResamplingFilter * filter = [GPUImageLanczosResamplingFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 23:{
+            //非最大抑制，只显示亮度最高的像素，其他为黑
+            GPUImageNonMaximumSuppressionFilter * filter = [GPUImageNonMaximumSuppressionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 24:{
+            //Sobel边缘检测算法(白边，黑内容，有点漫画的反色效果)
+            GPUImageSobelEdgeDetectionFilter * filter = [GPUImageSobelEdgeDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 25:{
+            //Canny边缘检测算法（比上更强烈的黑白对比度）
+            GPUImageCannyEdgeDetectionFilter * filter = [GPUImageCannyEdgeDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 26:{
+            //阈值边缘检测（效果与上差别不大）
+            GPUImageThresholdEdgeDetectionFilter * filter = [GPUImageThresholdEdgeDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 27:{
+            //普瑞维特(Prewitt)边缘检测(效果与Sobel差不多，貌似更平滑)
+            GPUImagePrewittEdgeDetectionFilter * filter = [GPUImagePrewittEdgeDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 28:{
+            //XYDerivative边缘检测，画面以蓝色为主，绿色为边缘，带彩色
+            GPUImageXYDerivativeFilter * filter = [GPUImageXYDerivativeFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 29:{
+            //Harris角点检测，会有绿色小十字显示在图片角点处
+            GPUImageHarrisCornerDetectionFilter * filter = [GPUImageHarrisCornerDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 30:{
+            //Noble角点检测，检测点更多
+            GPUImageNobleCornerDetectionFilter * filter = [GPUImageNobleCornerDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 31:{
+            //ShiTomasi角点检测，与上差别不大
+            GPUImageShiTomasiFeatureDetectionFilter * filter = [GPUImageShiTomasiFeatureDetectionFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 32:{
+            //图像黑白化，并有大量噪点
+            GPUImageLocalBinaryPatternFilter * filter = [GPUImageLocalBinaryPatternFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 33:{
+            //用于图像加亮
+            GPUImageLowPassFilter * filter = [GPUImageLowPassFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 34:{
+            //图像低于某值时显示为黑
+            GPUImageHighPassFilter * filter = [GPUImageHighPassFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        default:
+            break;
+    }
+    return nil;
+}
+
+
+-(UIImage*)colorProcessImage:(UIImage*)image withType:(NSInteger)type value1:(CGFloat)v1 value2:(CGFloat)v2 value3:(CGFloat)v3 {
+    switch (type) {
+        case 0:{
+            //亮度
+            GPUImageBrightnessFilter * filter = [GPUImageBrightnessFilter new];
+            filter.brightness = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 1:{
+            //曝光
+            GPUImageExposureFilter * filter = [GPUImageExposureFilter new];
+            filter.exposure = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 2:{
+            //对比度
+            GPUImageContrastFilter * filter = [GPUImageContrastFilter new];
+            filter.contrast = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 3:{
+            //饱和度
+            GPUImageSaturationFilter * filter = [GPUImageSaturationFilter new];
+            filter.saturation = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 4:{
+            //伽马线
+            GPUImageGammaFilter * filter = [GPUImageGammaFilter new];
+            filter.gamma = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 5:{
+            //反色
+            GPUImageColorInvertFilter * filter = [GPUImageColorInvertFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 6:{
+            //怀旧
+            GPUImageSepiaFilter * filter = [GPUImageSepiaFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 7:{
+            //色阶
+            GPUImageLevelsFilter * filter = [GPUImageLevelsFilter new];
+            [filter setRedMin:0 gamma:0.5 max:v1];
+            [filter setGreenMin:0 gamma:0.5 max:v2];
+            [filter setBlueMin:0 gamma:0.5 max:v3];
+            
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 8:{
+            //灰度
+            GPUImageGrayscaleFilter * filter = [GPUImageGrayscaleFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 9:{
+            //色彩直方图，显示在图片上
+            GPUImageHistogramFilter * filter = [[GPUImageHistogramFilter alloc] initWithHistogramType:kGPUImageHistogramRed];
+            filter.downsamplingFactor = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 10:{
+            //色彩直方图
+            GPUImageHistogramGenerator * filter = [GPUImageHistogramGenerator new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 11:{
+            //RGB
+            GPUImageRGBFilter * filter = [GPUImageRGBFilter new];
+            filter.red = v1;
+            filter.green = v2;
+            filter.blue = v3;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 12:{
+            //色调曲线
+            GPUImageToneCurveFilter * filter = [GPUImageToneCurveFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 13:{
+            //单色
+            GPUImageMonochromeFilter * filter = [GPUImageMonochromeFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 14:{
+            //不透明度
+            GPUImageOpacityFilter * filter = [GPUImageOpacityFilter new];
+            filter.opacity = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 15:{
+            //提亮阴影
+            GPUImageHighlightShadowFilter * filter = [GPUImageHighlightShadowFilter new];
+            filter.shadows = v1;
+            filter.highlights = v2;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 16:{
+            //色彩替换（替换亮部和暗部色彩）
+            GPUImageFalseColorFilter * filter = [GPUImageFalseColorFilter new];
+            [filter setFirstColorRed:v1 green:v2 blue:v3];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 17:{
+            //色度
+            GPUImageHueFilter * filter = [GPUImageHueFilter new];
+            filter.hue = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 18:{
+            //色度键
+            GPUImageChromaKeyFilter * filter = [GPUImageChromaKeyFilter new];
+            [filter setColorToReplaceRed:v1 green:v2 blue:v3];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 19:{
+            //白平横
+            GPUImageWhiteBalanceFilter * filter = [GPUImageWhiteBalanceFilter new];
+            filter.temperature = v1;
+            filter.tint = v2;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 20:{
+            //像素平均色值
+            GPUImageAverageColor * filter = [GPUImageAverageColor new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 21:{
+            //纯色
+            GPUImageSolidColorGenerator * filter = [GPUImageSolidColorGenerator new];
+            [filter setColorRed:v1 green:v2 blue:v3 alpha:1.0];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 22:{
+            //亮度平均
+            GPUImageLuminosity * filter = [GPUImageLuminosity new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 23:{
+            //像素色值亮度平均，图像黑白（有类似漫画效果）
+            GPUImageAverageLuminanceThresholdFilter * filter = [GPUImageAverageLuminanceThresholdFilter new];
+            filter.thresholdMultiplier = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 24:{
+            //lookup 色彩调整
+            GPUImageLookupFilter * filter = [GPUImageLookupFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 25:{
+            //Amatorka lookup
+            GPUImageAmatorkaFilter * filter = [GPUImageAmatorkaFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 26:{
+            //MissEtikate looku
+            GPUImageMissEtikateFilter * filter = [GPUImageMissEtikateFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 27:{
+            //SoftElegance looku
+            GPUImageSoftEleganceFilter * filter = [GPUImageSoftEleganceFilter new];
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        default:
+            break;
+    }
+    return image;
+}
+
 @end

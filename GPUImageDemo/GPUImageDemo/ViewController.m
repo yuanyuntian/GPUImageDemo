@@ -7,6 +7,8 @@
 
 #import "ViewController.h"
 #import "PTImageEditViewController.h"
+#import "PTImageProcessController.h"
+#import "PTColorProcessController.h"
 
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -22,7 +24,7 @@
     [super viewDidLoad];
     self.title = @"GPUImageDemo";
     // Do any additional setup after loading the view.
-    self.source = @[@"视觉效果",@"图像处理",@"调整颜色",@"混合模式",@"自定义滤镜",@"视频编辑"];
+    self.source = @[@"视觉效果",@"图像处理",@"颜色处理",@"混合模式",@"自定义滤镜",@"视频编辑"];
     [self.tableView reloadData];
 }
 
@@ -56,7 +58,13 @@
         [self.navigationController pushViewController:imageVC animated:true];
 
     }else if (indexPath.row == 1) {
-        
+        //图像处理
+        PTImageProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTImageProcessController"];
+        [self.navigationController pushViewController:imageVC animated:true];
+    }else if (indexPath.row == 2) {
+        //颜色处理
+        PTColorProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTColorProcessController"];
+        [self.navigationController pushViewController:imageVC animated:true];
     }
 }
 

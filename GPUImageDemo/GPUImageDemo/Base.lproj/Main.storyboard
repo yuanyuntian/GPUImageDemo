@@ -95,6 +95,169 @@
             </objects>
             <point key="canvasLocation" x="1582.608695652174" y="245.75892857142856"/>
         </scene>
+        <!--Image Process Controller-->
+        <scene sceneID="Yzz-wZ-TLJ">
+            <objects>
+                <viewController storyboardIdentifier="PTImageProcessController" id="Avj-UJ-Jbf" customClass="PTImageProcessController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="08c-SY-Vt2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RyK-ex-wRC">
+                                <rect key="frame" x="0.0" y="44" width="414" height="381"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="id4-fl-8a6">
+                                <rect key="frame" x="98" y="433" width="215" height="98"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="添加图片"/>
+                                <connections>
+                                    <action selector="addImageAction:" destination="Avj-UJ-Jbf" eventType="touchUpInside" id="ywe-af-wiA"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Uh3-VZ-Ooy">
+                                <rect key="frame" x="128" y="605" width="268" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VJ-ar-DAD">
+                                <rect key="frame" x="20" y="613" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bS9-3r-SC4">
+                                <rect key="frame" x="130" y="679" width="266" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyY-93-BW1">
+                                <rect key="frame" x="20" y="679" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lPg-u0-Iw3">
+                                <rect key="frame" x="130" y="751" width="266" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTp-fZ-0vy">
+                                <rect key="frame" x="20" y="755" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="94d-33-eaA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="94d-33-eaA" firstAttribute="trailing" secondItem="RyK-ex-wRC" secondAttribute="trailing" id="Sdi-cr-88g"/>
+                            <constraint firstItem="RyK-ex-wRC" firstAttribute="leading" secondItem="94d-33-eaA" secondAttribute="leading" id="UVb-g4-wtB"/>
+                            <constraint firstItem="RyK-ex-wRC" firstAttribute="top" secondItem="94d-33-eaA" secondAttribute="top" id="arB-tj-znS"/>
+                            <constraint firstItem="94d-33-eaA" firstAttribute="bottom" secondItem="RyK-ex-wRC" secondAttribute="bottom" constant="437" id="pv4-vB-BjD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="add" destination="id4-fl-8a6" id="9kU-Zd-ebu"/>
+                        <outlet property="imageView" destination="RyK-ex-wRC" id="8QN-Rb-sDN"/>
+                        <outlet property="slider1" destination="Uh3-VZ-Ooy" id="y65-Rm-FQt"/>
+                        <outlet property="slider2" destination="bS9-3r-SC4" id="TWV-Wq-Hun"/>
+                        <outlet property="slider3" destination="lPg-u0-Iw3" id="EdK-8b-NQY"/>
+                        <outlet property="title1" destination="3VJ-ar-DAD" id="mX9-cC-N0P"/>
+                        <outlet property="title2" destination="JyY-93-BW1" id="usA-Lv-Zoq"/>
+                        <outlet property="title3" destination="hTp-fZ-0vy" id="Jbh-VH-Zub"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mt8-cT-Tmf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2462.3188405797105" y="287.94642857142856"/>
+        </scene>
+        <!--Color Process Controller-->
+        <scene sceneID="DrW-av-Udv">
+            <objects>
+                <viewController storyboardIdentifier="PTColorProcessController" id="DBL-rf-RpA" customClass="PTColorProcessController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jYO-kJ-qa7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dHD-wd-RdM">
+                                <rect key="frame" x="0.0" y="44" width="414" height="381"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-Fs-yey">
+                                <rect key="frame" x="98" y="433" width="215" height="98"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="添加图片"/>
+                                <connections>
+                                    <action selector="addImageAction:" destination="DBL-rf-RpA" eventType="touchUpInside" id="rZc-ng-04f"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="A5m-S8-seQ">
+                                <rect key="frame" x="128" y="605" width="268" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="changeValue1:" destination="DBL-rf-RpA" eventType="valueChanged" id="DGk-xc-vOz"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rss-HI-xNt">
+                                <rect key="frame" x="20" y="613" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="REe-Tb-DpM">
+                                <rect key="frame" x="130" y="679" width="266" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="changeValue2:" destination="DBL-rf-RpA" eventType="valueChanged" id="b5b-P2-ILK"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LI1-rI-rNj">
+                                <rect key="frame" x="20" y="679" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="GPh-4e-M7O">
+                                <rect key="frame" x="130" y="751" width="266" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="changeValue3:" destination="DBL-rf-RpA" eventType="valueChanged" id="RGw-c2-iQv"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F33-KA-keH">
+                                <rect key="frame" x="20" y="755" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7rr-hz-OCo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dHD-wd-RdM" firstAttribute="top" secondItem="7rr-hz-OCo" secondAttribute="top" id="abw-nv-x1L"/>
+                            <constraint firstItem="7rr-hz-OCo" firstAttribute="trailing" secondItem="dHD-wd-RdM" secondAttribute="trailing" id="e8v-Rb-x89"/>
+                            <constraint firstItem="7rr-hz-OCo" firstAttribute="bottom" secondItem="dHD-wd-RdM" secondAttribute="bottom" constant="437" id="vAO-9F-ytX"/>
+                            <constraint firstItem="dHD-wd-RdM" firstAttribute="leading" secondItem="7rr-hz-OCo" secondAttribute="leading" id="xTm-B5-Z1b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="add" destination="ilh-Fs-yey" id="GaU-AX-KFs"/>
+                        <outlet property="imageView" destination="dHD-wd-RdM" id="4Ra-mG-Iwk"/>
+                        <outlet property="slider1" destination="A5m-S8-seQ" id="ARc-le-Cui"/>
+                        <outlet property="slider2" destination="REe-Tb-DpM" id="9BX-Nb-1KA"/>
+                        <outlet property="slider3" destination="GPh-4e-M7O" id="zmv-0P-wCd"/>
+                        <outlet property="title1" destination="rss-HI-xNt" id="scW-2g-888"/>
+                        <outlet property="title2" destination="LI1-rI-rNj" id="HpD-8t-ppU"/>
+                        <outlet property="title3" destination="F33-KA-keH" id="k8p-Q1-auk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iLW-XM-4Ub" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3768" y="300"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="fDL-z2-1VW">
             <objects>

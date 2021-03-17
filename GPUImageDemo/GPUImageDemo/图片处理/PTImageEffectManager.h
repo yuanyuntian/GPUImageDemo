@@ -18,6 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param type 类型
 -(UIImage*)visualEffectImage:(UIImage*)image withType:(NSInteger)type;
 
+-(UIImage*)visualProcessImage:(UIImage*)image withType:(NSInteger)type;
+
+
+-(UIImage*)colorProcessImage:(UIImage*)image withType:(NSInteger)type value1:(CGFloat)v1 value2:(CGFloat)v2 value3:(CGFloat)v3;
+
 @end
 
 NS_ASSUME_NONNULL_END

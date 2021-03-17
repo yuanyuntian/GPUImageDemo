@@ -17,6 +17,8 @@
 		8622AC9F25FF66890047AB11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9E25FF66890047AB11 /* main.m */; };
 		8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673933A25FF703400C13B07 /* PTImageEditViewController.m */; };
 		8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */; };
+		86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */; };
+		86D04D032601E90200D1E776 /* PTColorProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04D022601E90200D1E776 /* PTColorProcessController.m */; };
 		B604D76C73FF27214C670E0A /* Pods_GPUImageDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,10 @@
 		8673933A25FF703400C13B07 /* PTImageEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageEditViewController.m; sourceTree = "<group>"; };
 		867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYCyclePagerViewCell.m; sourceTree = "<group>"; };
 		867394492600B3F800C13B07 /* TYCyclePagerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYCyclePagerViewCell.h; sourceTree = "<group>"; };
+		86D04CFD2601A04E00D1E776 /* PTImageProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageProcessController.h; sourceTree = "<group>"; };
+		86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageProcessController.m; sourceTree = "<group>"; };
+		86D04D012601E90200D1E776 /* PTColorProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTColorProcessController.h; sourceTree = "<group>"; };
+		86D04D022601E90200D1E776 /* PTColorProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTColorProcessController.m; sourceTree = "<group>"; };
 		BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImageDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E395E8D73B5551E603A8AFC0 /* Pods-GPUImageDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImageDemo.debug.xcconfig"; path = "Target Support Files/Pods-GPUImageDemo/Pods-GPUImageDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +108,10 @@
 				8673933A25FF703400C13B07 /* PTImageEditViewController.m */,
 				4CE946182600EE0100246BFB /* PTImageEffectManager.h */,
 				4CE946192600EE0100246BFB /* PTImageEffectManager.m */,
+				86D04CFD2601A04E00D1E776 /* PTImageProcessController.h */,
+				86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */,
+				86D04D012601E90200D1E776 /* PTColorProcessController.h */,
+				86D04D022601E90200D1E776 /* PTColorProcessController.m */,
 			);
 			path = "图片处理";
 			sourceTree = "<group>";
@@ -237,12 +247,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8622AC9425FF66880047AB11 /* ViewController.m in Sources */,
+				86D04D032601E90200D1E776 /* PTColorProcessController.m in Sources */,
 				4CE9461A2600EE0100246BFB /* PTImageEffectManager.m in Sources */,
 				8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */,
 				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */,
 				8622AC9F25FF66890047AB11 /* main.m in Sources */,
 				8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */,
+				86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
