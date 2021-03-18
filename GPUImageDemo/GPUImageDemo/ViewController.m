@@ -9,7 +9,7 @@
 #import "PTImageEditViewController.h"
 #import "PTImageProcessController.h"
 #import "PTColorProcessController.h"
-
+#import "PTCustomFilterController.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -64,6 +64,10 @@
     }else if (indexPath.row == 2) {
         //颜色处理
         PTColorProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTColorProcessController"];
+        [self.navigationController pushViewController:imageVC animated:true];
+    }else if (indexPath.row == 4) {
+        //自定义滤镜
+        PTCustomFilterController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTCustomFilterController"];
         [self.navigationController pushViewController:imageVC animated:true];
     }
 }

@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(UIImage*)colorProcessImage:(UIImage*)image withType:(NSInteger)type value1:(CGFloat)v1 value2:(CGFloat)v2 value3:(CGFloat)v3;
 
+
+-(UIImage*)Process3DImage:(UIImage*)image withType:(NSInteger)type value1:(CGFloat)v1 value2:(CGFloat)v2 value3:(CGFloat)v3;
+
 @end
 
 NS_ASSUME_NONNULL_END

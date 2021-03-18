@@ -19,6 +19,8 @@
 		8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */; };
 		86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */; };
 		86D04D032601E90200D1E776 /* PTColorProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04D022601E90200D1E776 /* PTColorProcessController.m */; };
+		86D4109526032C6400CF120F /* PTCustomFilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D4109426032C6400CF120F /* PTCustomFilterController.m */; };
+		86D4109A26034E2500CF120F /* PTGPUImage3DFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D4109926034E2500CF120F /* PTGPUImage3DFilter.m */; };
 		B604D76C73FF27214C670E0A /* Pods_GPUImageDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,10 @@
 		86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageProcessController.m; sourceTree = "<group>"; };
 		86D04D012601E90200D1E776 /* PTColorProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTColorProcessController.h; sourceTree = "<group>"; };
 		86D04D022601E90200D1E776 /* PTColorProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTColorProcessController.m; sourceTree = "<group>"; };
+		86D4109326032C6400CF120F /* PTCustomFilterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTCustomFilterController.h; sourceTree = "<group>"; };
+		86D4109426032C6400CF120F /* PTCustomFilterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTCustomFilterController.m; sourceTree = "<group>"; };
+		86D4109826034E2500CF120F /* PTGPUImage3DFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTGPUImage3DFilter.h; sourceTree = "<group>"; };
+		86D4109926034E2500CF120F /* PTGPUImage3DFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTGPUImage3DFilter.m; sourceTree = "<group>"; };
 		BCD267910E906936B07F161B /* Pods_GPUImageDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImageDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E395E8D73B5551E603A8AFC0 /* Pods-GPUImageDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImageDemo.debug.xcconfig"; path = "Target Support Files/Pods-GPUImageDemo/Pods-GPUImageDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +89,7 @@
 		8622AC8B25FF66880047AB11 /* GPUImageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				86D4109726034DD600CF120F /* cusomfilter */,
 				8673933825FF700700C13B07 /* 图片处理 */,
 				8622AC8C25FF66880047AB11 /* AppDelegate.h */,
 				8622AC8D25FF66880047AB11 /* AppDelegate.m */,
@@ -112,8 +119,19 @@
 				86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */,
 				86D04D012601E90200D1E776 /* PTColorProcessController.h */,
 				86D04D022601E90200D1E776 /* PTColorProcessController.m */,
+				86D4109326032C6400CF120F /* PTCustomFilterController.h */,
+				86D4109426032C6400CF120F /* PTCustomFilterController.m */,
 			);
 			path = "图片处理";
+			sourceTree = "<group>";
+		};
+		86D4109726034DD600CF120F /* cusomfilter */ = {
+			isa = PBXGroup;
+			children = (
+				86D4109826034E2500CF120F /* PTGPUImage3DFilter.h */,
+				86D4109926034E2500CF120F /* PTGPUImage3DFilter.m */,
+			);
+			path = cusomfilter;
 			sourceTree = "<group>";
 		};
 		B2BC83007C8D34950BBBDD11 /* Pods */ = {
@@ -250,8 +268,10 @@
 				86D04D032601E90200D1E776 /* PTColorProcessController.m in Sources */,
 				4CE9461A2600EE0100246BFB /* PTImageEffectManager.m in Sources */,
 				8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */,
+				86D4109A26034E2500CF120F /* PTGPUImage3DFilter.m in Sources */,
 				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */,
+				86D4109526032C6400CF120F /* PTCustomFilterController.m in Sources */,
 				8622AC9F25FF66890047AB11 /* main.m in Sources */,
 				8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */,
 				86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */,

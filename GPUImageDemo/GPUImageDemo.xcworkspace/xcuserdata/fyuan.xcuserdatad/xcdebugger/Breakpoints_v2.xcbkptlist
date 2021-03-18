@@ -14,8 +14,8 @@
             filePath = "GPUImageDemo/&#x56fe;&#x7247;&#x5904;&#x7406;/PTImageEffectManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "824"
-            endingLineNumber = "824"
+            startingLineNumber = "832"
+            endingLineNumber = "832"
             landmarkName = "-colorProcessImage:withType:value1:value2:value3:"
             landmarkType = "7">
          </BreakpointContent>
