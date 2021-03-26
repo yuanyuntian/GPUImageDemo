@@ -8,6 +8,7 @@
 #import "PTImageEffectManager.h"
 #import <GPUImage/GPUImage.h>
 #import "PTGPUImage3DFilter.h"
+#import "PTGPUImageSketchFilter.h"
 
 static PTImageEffectManager * instance = nil;
 
@@ -870,6 +871,7 @@ static PTImageEffectManager * instance = nil;
             break;
         case 3:{
             //饱和度
+            //在灰度基础上，在和原来颜色进行mix
             GPUImageSaturationFilter * filter = [GPUImageSaturationFilter new];
             filter.saturation = v1;
             [filter forceProcessingAtSize:image.size];
@@ -895,7 +897,7 @@ static PTImageEffectManager * instance = nil;
         }
             break;
         case 5:{
-            //反色
+            //反色  RGB分别取反
             GPUImageColorInvertFilter * filter = [GPUImageColorInvertFilter new];
             [filter forceProcessingAtSize:image.size];
             [filter useNextFrameForImageCapture];
@@ -936,6 +938,12 @@ static PTImageEffectManager * instance = nil;
             break;
         case 8:{
             //灰度
+            /* 灰度图像其实相当于YUV或者YIQ颜色空间中的Y分量。颜色具有三个基本特征量：辉度（亮度）、色调和饱和度。
+               Y分量对应的就是亮度。Y分量和RGB颜色空间的关系是Y=0.299*R+0.587*G+0.114*B。
+               从这个式子也可以看出，Y分量其实反映了人们对加性彩色系统的红绿蓝三原色的不同敏感程度
+             */
+             //luminance = 0.2125 * Red + 0.7154 * Green + 0.0721 * Blue
+            
             GPUImageGrayscaleFilter * filter = [GPUImageGrayscaleFilter new];
             [filter forceProcessingAtSize:image.size];
             [filter useNextFrameForImageCapture];
@@ -1199,6 +1207,17 @@ static PTImageEffectManager * instance = nil;
         case 0:{
             PTGPUImage3DFilter * filter = [PTGPUImage3DFilter new];
             filter.deviate = v1;
+            [filter forceProcessingAtSize:image.size];
+            [filter useNextFrameForImageCapture];
+
+            GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+            [stillImageSource addTarget:filter];
+            [stillImageSource processImage];
+            return [filter imageFromCurrentFramebuffer];
+        }
+            break;
+        case 1:{
+            PTGPUImageSketchFilter * filter = [PTGPUImageSketchFilter new];
             [filter forceProcessingAtSize:image.size];
             [filter useNextFrameForImageCapture];
 

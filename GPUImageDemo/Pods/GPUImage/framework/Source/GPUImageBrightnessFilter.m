@@ -7,7 +7,7 @@ NSString *const kGPUImageBrightnessFragmentShaderString = SHADER_STRING
  
  uniform sampler2D inputImageTexture;
  uniform lowp float brightness;
- 
+
  void main()
  {
      lowp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);

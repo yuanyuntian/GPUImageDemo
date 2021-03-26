@@ -38,7 +38,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.menu];
-    self.items = @[@"3D"];//@"Instagram风格"];
+    self.items = @[@"3D",@"素描"];//@"Instagram风格"];
     [self.menu reloadData];
     self.type = -1;
 }
