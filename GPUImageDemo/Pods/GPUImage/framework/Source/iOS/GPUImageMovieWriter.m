@@ -883,7 +883,7 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
             acl.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
             
             audioOutputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [ NSNumber numberWithInt: kAudioFormatMPEG4AAC ], AVFormatIDKey,
+                                   [ NSNumber numberWithInt: kAudioFormatMPEG4bum ], AVFormatIDKey,
                                    [ NSNumber numberWithInt: 1 ], AVNumberOfChannelsKey,
                                    [ NSNumber numberWithFloat: 44100.0 ], AVSampleRateKey,
                                    [ NSNumber numberWithInt: 64000 ], AVEncoderBitRateKey,

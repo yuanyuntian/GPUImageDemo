@@ -360,6 +360,39 @@
             </objects>
             <point key="canvasLocation" x="3768" y="300"/>
         </scene>
+        <!--Video Process Controller-->
+        <scene sceneID="bse-YY-dnw">
+            <objects>
+                <viewController storyboardIdentifier="PTVideoProcessController" id="a15-es-3eY" customClass="PTVideoProcessController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n2h-q7-akc" customClass="GPUImageView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEl-Vk-vti">
+                                <rect key="frame" x="68" y="588" width="112" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="开始"/>
+                                <connections>
+                                    <action selector="startAction:" destination="a15-es-3eY" eventType="touchUpInside" id="40g-oY-rDO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJr-cQ-2Em">
+                                <rect key="frame" x="244" y="588" width="112" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="结束"/>
+                                <connections>
+                                    <action selector="stopAction:" destination="a15-es-3eY" eventType="touchUpInside" id="c42-Sf-d8e"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uIW-0J-CMc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FEz-gZ-GRb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4705.7971014492759" y="320.75892857142856"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">

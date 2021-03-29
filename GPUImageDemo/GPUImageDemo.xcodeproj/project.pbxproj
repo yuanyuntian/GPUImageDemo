@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4CE9461A2600EE0100246BFB /* PTImageEffectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE946192600EE0100246BFB /* PTImageEffectManager.m */; };
+		861CBA9B261164B500B8227F /* PTVideoProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 861CBA9A261164B500B8227F /* PTVideoProcessController.m */; };
 		8622AC8E25FF66880047AB11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC8D25FF66880047AB11 /* AppDelegate.m */; };
 		8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9025FF66880047AB11 /* SceneDelegate.m */; };
 		8622AC9425FF66880047AB11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9325FF66880047AB11 /* ViewController.m */; };
@@ -29,6 +30,8 @@
 		4CE946182600EE0100246BFB /* PTImageEffectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageEffectManager.h; sourceTree = "<group>"; };
 		4CE946192600EE0100246BFB /* PTImageEffectManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageEffectManager.m; sourceTree = "<group>"; };
 		55B32804385010216EBACC50 /* Pods-GPUImageDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImageDemo.release.xcconfig"; path = "Target Support Files/Pods-GPUImageDemo/Pods-GPUImageDemo.release.xcconfig"; sourceTree = "<group>"; };
+		861CBA99261164B500B8227F /* PTVideoProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTVideoProcessController.h; sourceTree = "<group>"; };
+		861CBA9A261164B500B8227F /* PTVideoProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTVideoProcessController.m; sourceTree = "<group>"; };
 		8622AC8925FF66880047AB11 /* GPUImageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPUImageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8622AC8C25FF66880047AB11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8622AC8D25FF66880047AB11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -71,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		861CBA982611649500B8227F /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				861CBA99261164B500B8227F /* PTVideoProcessController.h */,
+				861CBA9A261164B500B8227F /* PTVideoProcessController.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		8622AC8025FF66880047AB11 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +104,7 @@
 		8622AC8B25FF66880047AB11 /* GPUImageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				861CBA982611649500B8227F /* Video */,
 				86D4109726034DD600CF120F /* cusomfilter */,
 				8673933825FF700700C13B07 /* 图片处理 */,
 				8622AC8C25FF66880047AB11 /* AppDelegate.h */,
@@ -279,6 +292,7 @@
 				8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */,
 				86D4109526032C6400CF120F /* PTCustomFilterController.m in Sources */,
 				8622AC9F25FF66890047AB11 /* main.m in Sources */,
+				861CBA9B261164B500B8227F /* PTVideoProcessController.m in Sources */,
 				8622AC9125FF66880047AB11 /* SceneDelegate.m in Sources */,
 				86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */,
 			);
@@ -425,14 +439,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 76PHNKT83Q;
+				DEVELOPMENT_TEAM = 8GP2A47QW9;
 				INFOPLIST_FILE = GPUImageDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yuanf.GPUImageDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobo.livewallpaperhd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -445,14 +459,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 76PHNKT83Q;
+				DEVELOPMENT_TEAM = 8GP2A47QW9;
 				INFOPLIST_FILE = GPUImageDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yuanf.GPUImageDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobo.livewallpaperhd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
