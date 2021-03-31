@@ -24,31 +24,12 @@
 	<string>Whether to allow the app to use your album to generate wallpaper?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Whether to allow location to save the location to the photo?</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Whether to allow location to save the location to the photo?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Whether to allow location to save the location to the photo?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Whether to allow the app to use your album to generate wallpaper?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Whether to allow the app to use your album to generate wallpaper?</string>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
-		<key>UISceneConfigurations</key>
-		<dict>
-			<key>UIWindowSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneConfigurationName</key>
-					<string>Default Configuration</string>
-					<key>UISceneDelegateClassName</key>
-					<string>SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

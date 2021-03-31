@@ -10,4 +10,7 @@ target 'GPUImageDemo' do
     pod 'Masonry'
     pod 'TZImagePickerController'
     pod 'TYCyclePagerView'
+#    pod 'libx265', '~> 3.0'
+#    pod 'librtmp-iOS', '~> 1.1.0'
+pod 'libyuv-iOS', '~> 1.0.2'
 end

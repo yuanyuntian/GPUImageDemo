@@ -1,11 +1,13 @@
 PODS:
   - GPUImage (0.1.7)
+  - libyuv-iOS (1.0.2)
   - Masonry (1.1.0)
   - TYCyclePagerView (1.2.0)
   - TZImagePickerController (3.5.8)
 
 DEPENDENCIES:
   - GPUImage
+  - libyuv-iOS (~> 1.0.2)
   - Masonry
   - TYCyclePagerView
   - TZImagePickerController
@@ -13,16 +15,18 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - GPUImage
+    - libyuv-iOS
     - Masonry
     - TYCyclePagerView
     - TZImagePickerController
 
 SPEC CHECKSUMS:
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  libyuv-iOS: 5a154ccc84ec754029886ecb607512731fe30640
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   TZImagePickerController: 7fd9702897ef8c0b7c951e5463f4bcf398296f9e
 
-PODFILE CHECKSUM: 1d429866b0c52d56a362cfb39e3e9b399698fb3b
+PODFILE CHECKSUM: c82e9e350f5bfd461bfd2edd2a9405de748c1d0d
 
 COCOAPODS: 1.10.0
