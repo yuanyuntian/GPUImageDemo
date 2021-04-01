@@ -8,11 +8,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <GPUImage/GPUImage.h>
+#import "PTAVCapture.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PTGPUImageAVCapture : NSObject
-@property (nonatomic, strong) GPUImageView *gpuImageView;
+@interface PTGPUImageAVCapture : PTAVCapture
 @end
 
 NS_ASSUME_NONNULL_END
