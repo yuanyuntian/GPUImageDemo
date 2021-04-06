@@ -11,6 +11,8 @@
 #import "PTColorProcessController.h"
 #import "PTCustomFilterController.h"
 #import "PTVideoProcessController.h"
+#import "PTH264EncoderController.h"
+
 
 
 
@@ -27,7 +29,7 @@
     [super viewDidLoad];
     self.title = @"GPUImageDemo";
     // Do any additional setup after loading the view.
-    self.source = @[@"视觉效果",@"图像处理",@"颜色处理",@"混合模式",@"自定义滤镜",@"视频编辑"];
+    self.source = @[@"视觉效果",@"图像处理",@"颜色处理",@"混合模式",@"自定义滤镜",@"视频编辑",@"h264编码"];
     [self.tableView reloadData];
 }
 
@@ -75,6 +77,10 @@
     }else if (indexPath.row == 5) {
         //
         PTVideoProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTVideoProcessController"];
+        [self.navigationController pushViewController:imageVC animated:true];
+    }else if (indexPath.row == 6) {
+        //
+        PTH264EncoderController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTH264EncoderController"];
         [self.navigationController pushViewController:imageVC animated:true];
     }
 }
