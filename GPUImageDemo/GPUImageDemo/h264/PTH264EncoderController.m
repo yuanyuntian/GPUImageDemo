@@ -195,7 +195,6 @@ static NSString *const H264FilePath = @"test.h264";
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
     [self.h264Encoder encode:sampleBuffer];
-
 }
 
 #pragma mark - 编码回调
