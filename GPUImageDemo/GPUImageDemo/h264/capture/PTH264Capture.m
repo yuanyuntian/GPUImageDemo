@@ -12,7 +12,7 @@
 #import "AVAssetWriteManager.h"
 #import "XCFileManager.h"
 #import "PTHaacEncoder.h"
-
+#import "PTx264Encoder.h"
 
 @interface PTH264Capture()<H264HWEncoderDelegate,AVAssetWriteManagerDelegate,PTAACEncoderDelegate>{
     pthread_mutex_t _releaseLock;
@@ -32,6 +32,7 @@
 
 @property (nonatomic, strong) AVCaptureSession *videoCaptureSession;
 
+@property (nonatomic, strong) PTx264Encoder *x264Encoder;
 @property (nonatomic, strong) PTHh264Encoder *h264Encoder;
 @property (nonatomic, strong) PTHaacEncoder *aacEncoder;
 
@@ -68,6 +69,8 @@
     
     self.aacEncoder = [PTHaacEncoder new];
     self.aacEncoder.delegate = self;
+    
+    self.x264Encoder = [[PTx264Encoder alloc] initEncoderWidth:self.outputSize.width height:self.outputSize.height];
 }
 
 - (void) setOutputSize:(CGSize)outputSize {
@@ -157,6 +160,7 @@
     self.videoOutput = [AVCaptureVideoDataOutput new];
     [self.videoOutput setSampleBufferDelegate:self queue:_videoQueue];
     
+    [self adjustVideoStabilization];
     // 配置输出视频图像格式
     [self.videoOutput setVideoSettings:@{(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange)}];
     self.videoOutput.alwaysDiscardsLateVideoFrames = NO;
@@ -175,6 +179,35 @@
     // 添加预览
     self.previewLayer = [AVCaptureVideoPreviewLayer  layerWithSession:self.videoCaptureSession];
     [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+}
+
+//防抖
+-(void)adjustVideoStabilization{
+    NSArray *devices = [AVCaptureDevice devices];
+    for(AVCaptureDevice *device in devices){
+        if([device hasMediaType:AVMediaTypeVideo]){
+            if([device.activeFormat isVideoStabilizationModeSupported:AVCaptureVideoStabilizationModeAuto]){
+                for(AVCaptureConnection *connection in self.videoOutput.connections)
+                {
+                    for(AVCaptureInputPort *port in [connection inputPorts])
+                    {
+                        if([[port mediaType] isEqual:AVMediaTypeVideo])
+                        {
+                            if(connection.supportsVideoStabilization)
+                            {
+                                connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+                                NSLog(@"activeVideoStabilizationMode = %ld",(long)connection.activeVideoStabilizationMode);
+                            }else{
+                                NSLog(@"connection don't support video stabilization");
+                            }
+                        }
+                    }
+                }
+            }else{
+                NSLog(@"device don't support video stablization");
+            }
+        }
+    }
 }
 
 // 切换分辨率
@@ -290,7 +323,8 @@
 //                        [self.h264Encoder encode:sampleBuffer size:self.outputSize];
 //                    }
             }
-            [self.h264Encoder encode:sampleBuffer];
+            [self.x264Encoder encoder:sampleBuffer];
+//            [self.h264Encoder encode:sampleBuffer];
 //            self.outputSize = CGSizeMake(0, 0);// 输出尺寸置空，则不需要再初始化VTCompressionSessionRef
             CFRelease(sampleBuffer);
         });

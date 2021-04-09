@@ -22,7 +22,6 @@
     if (self = [super init]) {
         _w = width;
         _h = height;
-        [self setVideoToolBox];
     }
     return self;
 }
@@ -116,26 +115,20 @@ void didPTCompressH264(void *outputCallbackRefCon, void *sourceFrameRefCon, OSSt
 }
 
 - (void)encode:(CMSampleBufferRef)sampleBuffer {
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-
-    if(_session != NULL && sampleBuffer != NULL) {
-        // Create properties
-        CMTime timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-//        CMTime pts = CMTimeMake(CMTimeGetSeconds(timestamp), 1000.0);
-//        NSLog(@"%f", CMTimeGetSeconds(pts));
-        VTEncodeInfoFlags flags;
-        VTCompressionSessionEncodeFrame(_session, imageBuffer, timestamp, kCMTimeInvalid, NULL, NULL, &flags);
-//        if (flags != noErr) {
-//            NSLog(@"H264: VTCompressionSessionEncodeFrame failed with %d", (int)flags);
-//
-//            if (_session) {
-//                VTCompressionSessionInvalidate(_session);
-//                CFRelease(_session);
-//                _session = NULL;
-//            }
-//            return;
-//        }
-//        NSLog(@"H264: VTCompressionSessionEncodeFrame Success");
+    if (_session == NULL) {
+        [self setVideoToolBox];
+    }
+    CVImageBufferRef imageBuffer  = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CMTime presentationTime       = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+    
+    OSStatus status = VTCompressionSessionEncodeFrame(_session, imageBuffer, presentationTime, kCMTimeInvalid, NULL, NULL, NULL);
+    if (status != noErr) {
+        VTCompressionSessionInvalidate(_session);
+        VTCompressionSessionCompleteFrames(_session, kCMTimeInvalid);
+        CFRelease(_session);
+        _session = NULL;
+        NSLog(@"AppHWH264Encoder, encoder failed");
+        return;
     }
 }
 
