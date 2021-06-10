@@ -10,9 +10,9 @@
 #import "PTImageProcessController.h"
 #import "PTColorProcessController.h"
 #import "PTCustomFilterController.h"
-#import "PTVideoProcessController.h"
-#import "PTH264EncoderController.h"
-#import "PTH264PushViewController.h"
+//#import "PTVideoProcessController.h"
+//#import "PTH264EncoderController.h"
+#import "PTPushLiveViewController.h"
 
 
 
@@ -77,15 +77,14 @@
         [self.navigationController pushViewController:imageVC animated:true];
     }else if (indexPath.row == 5) {
         //
-        PTVideoProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTVideoProcessController"];
-        [self.navigationController pushViewController:imageVC animated:true];
+//        PTVideoProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTVideoProcessController"];
+//        [self.navigationController pushViewController:imageVC animated:true];
     }else if (indexPath.row == 6) {
         //
-        PTH264EncoderController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTH264EncoderController"];
-        [self.navigationController pushViewController:imageVC animated:true];
+//        PTH264EncoderController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTH264EncoderController"];
+//        [self.navigationController pushViewController:imageVC animated:true];
     }else if (indexPath.row == 7) {
-        //
-        PTH264PushViewController * vc = [board instantiateViewControllerWithIdentifier:@"PTH264PushViewController"];
+        PTPushLiveViewController * vc = [board instantiateViewControllerWithIdentifier:@"PTPushLiveViewController"];
         [self.navigationController pushViewController:vc animated:true];
     }
 }
