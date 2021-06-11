@@ -7,10 +7,10 @@
 
 #import "PTPushLiveViewController.h"
 #import "LMLivePreview.h"
-
+#import <Masonry/Masonry.h>
 
 @interface PTPushLiveViewController ()
-
+@property(nonatomic, strong)LMLivePreview * liveView;
 @end
 
 @implementation PTPushLiveViewController
@@ -19,9 +19,18 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.translucent = NO;
     // Do any additional setup after loading the view.
-    UIView * liveView = [[LMLivePreview alloc] initWithFrame:self.view.bounds];
-    liveView.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:liveView];
+    self.liveView = [LMLivePreview new];
+    [self.view addSubview:self.liveView];
+    [self.liveView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0,*)){
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        }else{
+            make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
+            make.top.equalTo(self.mas_topLayoutGuideBottom);
+        }
+        make.left.right.equalTo(self.view);
+    }];
 }
 
 /*

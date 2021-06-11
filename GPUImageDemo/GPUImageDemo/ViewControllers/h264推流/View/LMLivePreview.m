@@ -100,7 +100,8 @@
                 [_self.session stopLive];
             }
         }];
-        
+        [self.containerView addSubview:self.startLiveButton];
+
         [self requestAccessForVideo];
         [self requestAccessForAudio];
         
@@ -139,10 +140,10 @@
     
     [self.startLiveButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.containerView).offset(-20);
-        make.left.equalTo(self.containerView).offset(-20);
+        make.left.equalTo(self.containerView).offset(20);
         make.height.equalTo(@50);
         if (@available(iOS 11.0,*)){
-            make.bottom.equalTo(self.mas_safeAreaLayoutGuideBottom);
+            make.bottom.equalTo(self.mas_safeAreaLayoutGuideBottom).offset(-10);
             
         }else{
             make.bottom.equalTo(self.containerView).offset(-20);
@@ -345,102 +346,5 @@
     return _session;
 }
 
-- (UIView*)containerView{
-    if(!_containerView){
-        _containerView = [UIView new];
-        _containerView.frame = self.bounds;
-        _containerView.backgroundColor = [UIColor clearColor];
-        _containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    }
-    return _containerView;
-}
-
-- (UILabel*)stateLabel{
-    if(!_stateLabel){
-        _stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 80, 40)];
-        _stateLabel.text = @"未连接";
-        _stateLabel.textColor = [UIColor whiteColor];
-        _stateLabel.font = [UIFont boldSystemFontOfSize:14.f];
-    }
-    return _stateLabel;
-}
-
-- (UIButton*)closeButton{
-    if(!_closeButton){
-        _closeButton = [UIButton new];
-        _closeButton.size = CGSizeMake(44, 44);
-        _closeButton.left = self.width - 10 - _closeButton.width;
-        _closeButton.top = 20;
-        [_closeButton setImage:[UIImage imageNamed:@"close_preview"] forState:UIControlStateNormal];
-        _closeButton.exclusiveTouch = YES;
-        [_closeButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            
-        }];
-    }
-    return _closeButton;
-}
-
-- (UIButton*)cameraButton{
-    if(!_cameraButton){
-        _cameraButton = [UIButton new];
-        _cameraButton.size = CGSizeMake(44, 44);
-        _cameraButton.origin = CGPointMake(_closeButton.left - 10 - _cameraButton.width, 20);
-        [_cameraButton setImage:[UIImage imageNamed:@"camra_preview"] forState:UIControlStateNormal];
-        _cameraButton.exclusiveTouch = YES;
-        __weak typeof(self) _self = self;
-        [_cameraButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            AVCaptureDevicePosition devicePositon = _self.session.captureDevicePosition;
-            _self.session.captureDevicePosition = (devicePositon == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;
-        }];
-    }
-    return _cameraButton;
-}
-
-- (UIButton*)beautyButton{
-    if(!_beautyButton){
-        _beautyButton = [UIButton new];
-        _beautyButton.size = CGSizeMake(44, 44);
-        _beautyButton.origin = CGPointMake(_cameraButton.left - 10 - _beautyButton.width,20);
-        [_beautyButton setImage:[UIImage imageNamed:@"camra_beauty"] forState:UIControlStateSelected];
-        [_beautyButton setImage:[UIImage imageNamed:@"camra_beauty_close"] forState:UIControlStateNormal];
-        _beautyButton.exclusiveTouch = YES;
-        __weak typeof(self) _self = self;
-        [_beautyButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            _self.session.beautyFace = !_self.session.beautyFace;
-            _self.beautyButton.selected = !_self.session.beautyFace;
-        }];
-    }
-    return _beautyButton;
-}
-
-- (UIButton*)startLiveButton{
-    if(!_startLiveButton){
-        _startLiveButton = [UIButton new];
-        _startLiveButton.size = CGSizeMake(self.width - 60, 44);
-        _startLiveButton.left = 30;
-        _startLiveButton.bottom = self.height - 50;
-        _startLiveButton.layer.cornerRadius = _startLiveButton.height/2;
-        [_startLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_startLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        [_startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-        [_startLiveButton setBackgroundColor:[UIColor colorWithRed:50 green:32 blue:245 alpha:1]];
-        _startLiveButton.exclusiveTouch = YES;
-        __weak typeof(self) _self = self;
-        [_startLiveButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            _self.startLiveButton.selected = !_self.startLiveButton.selected;
-            if(_self.startLiveButton.selected){
-                [_self.startLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-                LFLiveStreamInfo *stream = [LFLiveStreamInfo new];
-                stream.url = @"rtmp://172.18.12.79:2002/rtmplive/demo";
-                //stream.url = @"rtmp://daniulive.com:1935/live/stream2399";
-                [_self.session startLive:stream];
-            }else{
-                [_self.startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-                [_self.session stopLive];
-            }
-        }];
-    }
-    return _startLiveButton;
-}
 
 @end
