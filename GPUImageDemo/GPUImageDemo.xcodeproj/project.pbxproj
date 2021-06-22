@@ -57,6 +57,9 @@
 		86AD3A2E2671F57C001C5933 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD3A2B2671F57C001C5933 /* UIView+YYAdd.m */; };
 		86AD3A2F2671F57C001C5933 /* UIControl+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD3A2C2671F57C001C5933 /* UIControl+YYAdd.m */; };
 		86AD3A322671F5C4001C5933 /* PTPushLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD3A312671F5C4001C5933 /* PTPushLiveViewController.m */; };
+		86AD860326818843006EDCDB /* PTViewEffectFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD860226818843006EDCDB /* PTViewEffectFilters.m */; };
+		86AD860626819F30006EDCDB /* PTColorEffectFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD860526819F30006EDCDB /* PTColorEffectFilters.m */; };
+		86AD860C2681C31D006EDCDB /* PTNashvilleFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AD860B2681C31D006EDCDB /* PTNashvilleFilter.m */; };
 		86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */; };
 		86D04D032601E90200D1E776 /* PTColorProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D04D022601E90200D1E776 /* PTColorProcessController.m */; };
 		86D4109526032C6400CF120F /* PTCustomFilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D4109426032C6400CF120F /* PTCustomFilterController.m */; };
@@ -164,6 +167,12 @@
 		86AD3A2D2671F57C001C5933 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
 		86AD3A302671F5C4001C5933 /* PTPushLiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTPushLiveViewController.h; sourceTree = "<group>"; };
 		86AD3A312671F5C4001C5933 /* PTPushLiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTPushLiveViewController.m; sourceTree = "<group>"; };
+		86AD860126818843006EDCDB /* PTViewEffectFilters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTViewEffectFilters.h; sourceTree = "<group>"; };
+		86AD860226818843006EDCDB /* PTViewEffectFilters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTViewEffectFilters.m; sourceTree = "<group>"; };
+		86AD860426819F30006EDCDB /* PTColorEffectFilters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTColorEffectFilters.h; sourceTree = "<group>"; };
+		86AD860526819F30006EDCDB /* PTColorEffectFilters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTColorEffectFilters.m; sourceTree = "<group>"; };
+		86AD860A2681C31D006EDCDB /* PTNashvilleFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTNashvilleFilter.h; sourceTree = "<group>"; };
+		86AD860B2681C31D006EDCDB /* PTNashvilleFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTNashvilleFilter.m; sourceTree = "<group>"; };
 		86D04CFD2601A04E00D1E776 /* PTImageProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageProcessController.h; sourceTree = "<group>"; };
 		86D04CFE2601A04E00D1E776 /* PTImageProcessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageProcessController.m; sourceTree = "<group>"; };
 		86D04D012601E90200D1E776 /* PTColorProcessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTColorProcessController.h; sourceTree = "<group>"; };
@@ -209,6 +218,7 @@
 		8622AC8B25FF66880047AB11 /* GPUImageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				86AD860026818798006EDCDB /* ViewEffect */,
 				86AD35932671EFA2001C5933 /* LFLiveKit */,
 				86D4109726034DD600CF120F /* cusomfilter */,
 				8673933825FF700700C13B07 /* ViewControllers */,
@@ -443,6 +453,17 @@
 			path = category;
 			sourceTree = "<group>";
 		};
+		86AD860026818798006EDCDB /* ViewEffect */ = {
+			isa = PBXGroup;
+			children = (
+				86AD860126818843006EDCDB /* PTViewEffectFilters.h */,
+				86AD860226818843006EDCDB /* PTViewEffectFilters.m */,
+				86AD860426819F30006EDCDB /* PTColorEffectFilters.h */,
+				86AD860526819F30006EDCDB /* PTColorEffectFilters.m */,
+			);
+			path = ViewEffect;
+			sourceTree = "<group>";
+		};
 		86D4109726034DD600CF120F /* cusomfilter */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +471,8 @@
 				86D4109926034E2500CF120F /* PTGPUImage3DFilter.m */,
 				868EADF72608910F00EDACC5 /* PTGPUImageSketchFilter.h */,
 				868EADF82608910F00EDACC5 /* PTGPUImageSketchFilter.m */,
+				86AD860A2681C31D006EDCDB /* PTNashvilleFilter.h */,
+				86AD860B2681C31D006EDCDB /* PTNashvilleFilter.m */,
 			);
 			path = cusomfilter;
 			sourceTree = "<group>";
@@ -609,10 +632,12 @@
 				86AD37452671EFA3001C5933 /* LFStreamRtmpSocket.m in Sources */,
 				86D4109A26034E2500CF120F /* PTGPUImage3DFilter.m in Sources */,
 				86AD37442671EFA3001C5933 /* NSMutableArray+LFAdd.m in Sources */,
+				86AD860626819F30006EDCDB /* PTColorEffectFilters.m in Sources */,
 				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				86AD3A212671F20F001C5933 /* parseurl.c in Sources */,
 				86AD374A2671EFA3001C5933 /* LFH264VideoEncoder.mm in Sources */,
 				868EADF92608910F00EDACC5 /* PTGPUImageSketchFilter.m in Sources */,
+				86AD860326818843006EDCDB /* PTViewEffectFilters.m in Sources */,
 				86AD374F2671EFA3001C5933 /* LFHardwareVideoEncoder.m in Sources */,
 				86AD373F2671EFA3001C5933 /* LFLiveStreamInfo.m in Sources */,
 				86AD374E2671EFA3001C5933 /* LFAVEncoder.mm in Sources */,
@@ -630,6 +655,7 @@
 				86AD3A1F2671F20F001C5933 /* rtmp.c in Sources */,
 				86AD37432671EFA3001C5933 /* LFLiveSession.m in Sources */,
 				86AD3A322671F5C4001C5933 /* PTPushLiveViewController.m in Sources */,
+				86AD860C2681C31D006EDCDB /* PTNashvilleFilter.m in Sources */,
 				86AD3A222671F20F001C5933 /* amf.c in Sources */,
 				86AD37422671EFA3001C5933 /* LFFrame.m in Sources */,
 				86D04CFF2601A04E00D1E776 /* PTImageProcessController.m in Sources */,

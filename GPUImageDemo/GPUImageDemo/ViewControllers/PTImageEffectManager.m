@@ -33,6 +33,10 @@ static PTImageEffectManager * instance = nil;
         case 0:{
             //素描
             GPUImageSketchFilter *filter = [GPUImageSketchFilter new];
+            filter.texelWidth = 0.0005;
+            filter.texelWidth = 0.0008;
+            filter.edgeStrength = 0.5;
+
             [filter forceProcessingAtSize:image.size];
             [filter useNextFrameForImageCapture];
             
