@@ -65,11 +65,11 @@
     
     GPUImageSmoothToonFilter *filter = [GPUImageSmoothToonFilter new];
     if (!isAuto) {
-        filter.threshold = threshold;
+        filter.blurRadiusInPixels = blurRadiusInPixels;
         filter.quantizationLevels = quantizationLevels;
         filter.threshold = threshold;
     }
-    
+
     [filter forceProcessingAtSize:image.size];
     [filter useNextFrameForImageCapture];
     
@@ -171,6 +171,35 @@
     GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
     [stillImageSource addTarget:filter];
     
+    [stillImageSource processImage];
+    return [filter imageFromCurrentFramebuffer];
+}
+
++ (UIImage *)sharpenFilter:(UIImage *)image value1:(CGFloat)sharpness  isAuto:(BOOL)isAuto {
+    GPUImageSharpenFilter *filter = [GPUImageSharpenFilter new];
+    if (!isAuto) {
+        filter.sharpness = sharpness;
+    }
+    [filter forceProcessingAtSize:image.size];
+    [filter useNextFrameForImageCapture];
+    
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+    [stillImageSource addTarget:filter];
+    
+    [stillImageSource processImage];
+    return [filter imageFromCurrentFramebuffer];
+}
+
++ (UIImage *)bilateralFilter:(UIImage *)image value1:(CGFloat)distanceNormalizationFactor  isAuto:(BOOL)isAuto {
+    GPUImageBilateralFilter * filter = [GPUImageBilateralFilter new];
+    if (!isAuto) {
+        filter.distanceNormalizationFactor = distanceNormalizationFactor;
+    }
+    [filter forceProcessingAtSize:image.size];
+    [filter useNextFrameForImageCapture];
+
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+    [stillImageSource addTarget:filter];
     [stillImageSource processImage];
     return [filter imageFromCurrentFramebuffer];
 }

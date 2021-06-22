@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param image <#image description#>
 /// @param threshold The threshold at which to apply the edges, default of 0.2
 /// @param quantizationLevels The levels of quantization for the posterization of colors within the scene, with a default of 10.0
-+ (UIImage *)cartoonFilter:(UIImage *)image value1:(CGFloat)threshold value2:quantizationLevels isAuto:(BOOL)isAuto;;
++ (UIImage *)cartoonFilter:(UIImage *)image value1:(CGFloat)threshold value2:(CGFloat)quantizationLevels isAuto:(BOOL)isAuto;
 
 
 
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 桑原(Kuwahara)滤波,水粉画
-/// @param image <#image description#>
+/// @param image image description
 /// @param radius The radius to sample from when creating the brush-stroke effect, with a default of 3. The larger the radius, the slower the filter.
 + (UIImage *)kuwaharaFilter:(UIImage *)image value1:(CGFloat)radius isAuto:(BOOL)isAuto;
 
@@ -87,6 +87,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param intensity The strength of the embossing, from  0.0 to 4.0, with 1.0 as the normal level
 /// @param isAuto <#isAuto description#>
 + (UIImage *)embossFilter:(UIImage *)image value1:(CGFloat)intensity  isAuto:(BOOL)isAuto;
+
+
+/// 锐化
+/// @param image <#image description#>
+/// @param sharpness Sharpness ranges from -4.0 to 4.0, with 0.0 as the normal level
+/// @param isAuto <#isAuto description#>
++ (UIImage *)sharpenFilter:(UIImage *)image value1:(CGFloat)sharpness  isAuto:(BOOL)isAuto;
+
+
+/// 双边模糊
+/// @param image <#image description#>
+/// @param distanceNormalizationFactor <#distanceNormalizationFactor description#>
+/// @param isAuto <#isAuto description#>
++ (UIImage *)bilateralFilter:(UIImage *)image value1:(CGFloat)distanceNormalizationFactor  isAuto:(BOOL)isAuto;
 
 @end
 

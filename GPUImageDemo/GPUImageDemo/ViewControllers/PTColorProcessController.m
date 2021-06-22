@@ -1,8 +1,8 @@
 //
-//  PTColorProcessController.m
+//  PTImageEditViewController.m
 //  GPUImageDemo
 //
-//  Created by Fei Yuan on 2021/3/17.
+//  Created by Fei Yuan on 2021/3/15.
 //
 
 #import "PTColorProcessController.h"
@@ -11,25 +11,22 @@
 #import <Masonry/Masonry.h>
 #import "TYCyclePagerViewCell.h"
 #import "PTImageEffectManager.h"
-
-
+#import "PTColorEffectFilters.h"
 
 @interface PTColorProcessController ()<TZImagePickerControllerDelegate,TYCyclePagerViewDataSource,TYCyclePagerViewDelegate>
-@property(nonatomic, weak)IBOutlet UIButton * add;
-@property(nonatomic, weak)IBOutlet UIImageView * imageView;
-
-@property(nonatomic, weak)IBOutlet UILabel * title1;
-@property(nonatomic, weak)IBOutlet UISlider * slider1;
-@property(nonatomic, weak)IBOutlet UILabel * title2;
-@property(nonatomic, weak)IBOutlet UISlider * slider2;
-@property(nonatomic, weak)IBOutlet UILabel * title3;
-@property(nonatomic, weak)IBOutlet UISlider * slider3;
-
+@property(nonatomic, strong) UIButton * add;
+@property(nonatomic, strong)UIImageView * imageView;
 @property(nonatomic, strong) TYCyclePagerView * menu;
 @property(nonatomic, strong) NSArray * items;
 @property(nonatomic, strong) UIImage * sourceImage;
 
-@property(nonatomic, assign) NSInteger  type;
+@property(nonatomic, strong) UISlider * slider1;
+
+@property(nonatomic, strong) UISlider * slider2;
+
+@property(nonatomic, strong) UISlider * slider3;
+
+@property(nonatomic, assign) NSInteger  currentIndex;
 
 @end
 
@@ -37,12 +34,87 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
+    self.navigationController.navigationBar.translucent = NO;
     // Do any additional setup after loading the view.
+    
+    self.imageView = [[UIImageView alloc] init];
+    [self.view addSubview:self.imageView];
+    self.imageView.clipsToBounds = YES;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageView.backgroundColor = [UIColor blackColor];
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.bottom.equalTo(self.view);
+    }];
+    
+    self.slider1 = [[UISlider alloc] init];
+    self.slider1.minimumValue = 0.0;
+    self.slider1.tag = 0;
+    [self.view addSubview:self.slider1];
+    [self.slider1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(40);
+        make.right.equalTo(self.view).offset(-40);
+        make.top.equalTo(self.view).offset(20);
+    }];
+    [self.slider1 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider1 setContinuous:true];
+
+    
+    self.slider2 = [[UISlider alloc] init];
+    self.slider2.minimumValue = 0.0;
+    self.slider2.tag = 1;
+    [self.view addSubview:self.slider2];
+    [self.slider2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.slider1);
+        make.top.equalTo(self.slider1.mas_bottom).offset(20);
+    }];
+    [self.slider2 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider2 setContinuous:true];
+
+    self.slider3 = [[UISlider alloc] init];
+    self.slider3.minimumValue = 0.0;
+    self.slider3.tag = 2;
+    [self.view addSubview:self.slider3];
+    [self.slider3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.slider1);
+        make.top.equalTo(self.slider2.mas_bottom).offset(20);
+    }];
+    [self.slider3 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider3 setContinuous:true];
+
+    self.add = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.add setTitle:@"添加图片" forState:UIControlStateNormal];
+    [self.add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.add addTarget:self action:@selector(addImageAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.add];
+    [self.add mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.width.height.equalTo(@100);
+    }];
+    
+    self.items = @[@"亮度",@"曝光",@"对比度",@"饱和度",@"伽马线",@"怀旧",@"灰度",@"RGB",@"不透明度",@"提亮阴影",@"白平横",@"优雅",@"HDR",@"流年",@"人物"];//@"Instagram风格"];
     [self.view addSubview:self.menu];
-    self.items = @[@"亮度",@"曝光",@"对比度",@"饱和度",@"伽马线",@"反色",@"褐色（怀旧）",@"色阶",@"灰度",@"色彩直方图，显示在图片上",@"色彩直方图",@"RGB",@"色调曲线",@"单色",@"不透明度",@"提亮阴影",@"色彩替换（替换亮部和暗部色彩",@"色度",@"色度键",@"白平横",@"像素平均色值",@"纯色",@"亮度平均",@"像素色值亮度平均，图像黑白（有类似漫画效果）",@"lookup色彩调整",@"Amatorka lookup",@"MissEtikate lookup",@"SoftElegance lookup"];//@"Instagram风格"];
+    [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        if (@available(iOS 11.0,*)){
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        }else{
+            make.bottom.equalTo(self.mas_bottomLayoutGuide);
+        }
+        make.height.mas_equalTo(80);
+    }];
+    self.currentIndex = INT_MAX;
     [self.menu reloadData];
-    self.type = -1;
 }
+
+-(void)sliderValueChanged:(UISlider *)slider
+{
+    if (self.sourceImage == nil || self.currentIndex == INT_MAX) {
+        return;
+    }
+    [self processImage:self.currentIndex];
+}
+
 
 -(TYCyclePagerView*)menu {
     if (_menu == nil) {
@@ -55,33 +127,6 @@
     }
     return _menu;
 }
-
--(void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    
-    [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        if (@available(iOS 11.0,*)){
-            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
-        }else{
-            make.bottom.equalTo(self.mas_bottomLayoutGuide);
-        }
-        make.height.mas_equalTo(80);
-    }];
-}
-
--(IBAction)changeValue1:(id)sender {
-    self.imageView.image = [[PTImageEffectManager shareInstance] colorProcessImage:self.sourceImage withType:self.type value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value];
-}
-
--(IBAction)changeValue2:(id)sender {
-    self.imageView.image = [[PTImageEffectManager shareInstance] colorProcessImage:self.sourceImage withType:self.type value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value];
-}
-
--(IBAction)changeValue3:(id)sender {
-    self.imageView.image = [[PTImageEffectManager shareInstance] colorProcessImage:self.sourceImage withType:self.type value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value];
-}
-
 
 
 -(IBAction)addImageAction:(id)sender {
@@ -130,243 +175,205 @@
 }
 
 - (void)pagerView:(TYCyclePagerView *)pageView didSelectedItemCell:(__kindof UICollectionViewCell *)cell atIndex:(NSInteger)index {
+    self.slider1.value = 0;
+    self.slider2.value = 0;
+    self.slider3.value = 0;
+
     if (self.sourceImage == nil) {
         return;
     }
-    self.type = index;
-    [self setConfigSliderParma:index];
-    self.imageView.image = [[PTImageEffectManager shareInstance] colorProcessImage:self.sourceImage withType:index value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value];
+    self.imageView.image = self.sourceImage;
+    self.currentIndex = index;
+    [self setSliderConfig:index];
+//    self.imageView.image = [[PTImageEffectManager shareInstance] visualEffectImage:self.sourceImage withType:index];
 }
 
+-(void)setSliderConfig:(NSInteger)index {
+    switch (index) {
+        case 0:
+            self.slider1.maximumValue = 1;
+            self.slider1.minimumValue = -1;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 1:
+            self.slider1.maximumValue = 10;
+            self.slider1.minimumValue = -10;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
 
--(void)setConfigSliderParma:(NSInteger)type {
-    switch (type) {
-        case 0:{
-            //亮度
-            self.slider1.minimumValue = -1.0;
-            self.slider1.maximumValue = 1.0;
+            break;
+        case 2:
+            self.slider1.maximumValue = 4;
             
-            self.title1.text = @"亮度";
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
             break;
-        case 1:{
-            //曝光
-            self.slider1.minimumValue = -10.0;
-            self.slider1.maximumValue = 10.0;
-            self.title1.text = @"曝光";
-        }
-            break;
-        case 2:{
-            //对比度
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 4.0;
-            self.title1.text = @"对比度";
-        }
-            break;
-        case 3:{
-            //饱和度
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 2.0;
-            self.title1.text = @"饱和度";
-        }
-            break;
-        case 4:{
-            //伽马线
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 3.0;
-            self.title1.text = @"伽马线";
-        }
-            break;
-        case 5:{
-            //反色
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 3.0;
-            self.title1.text = @"反色";
-        }
-            break;
-        case 6:{
-            //怀旧
-            self.title1.text = @"怀旧";
-        }
-            break;
-        case 7:{
-            //色阶
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"red";
+        case 3:
+            self.slider1.maximumValue = 2;
             
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"green";
-            
-            self.slider3.minimumValue = 0.0;
-            self.slider3.maximumValue = 1.0;
-            self.title3.text = @"blue";
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
             break;
-        case 8:{
-            //灰度
-            self.title1.text = @"灰度";
-        }
-            break;
-        case 9:{
-            //色彩直方图，显示在图片上
-            self.slider1.minimumValue = 1.0;
-            self.slider1.maximumValue = 20.0;
-            self.title1.text = @"色彩直方图";
-        }
-            break;
-        case 10:{
-            //色彩直方图
+        case 4:
+            self.slider1.maximumValue = 3;
 
-        }
-            break;
-        case 11:{
-            //RGB
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"red";
             
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"green";
-            
-            self.slider3.minimumValue = 0.0;
-            self.slider3.maximumValue = 1.0;
-            self.title3.text = @"blue";
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
             break;
-        case 12:{
-            //色调曲线
+        case 5:
+            self.slider1.maximumValue = 5;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 6:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+            self.slider2.minimumValue = -1;
 
-        }
-            break;
-        case 13:{
-            //单色
+            self.slider1.hidden = true;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            [self processImage:index];
 
-        }
             break;
-        case 14:{
-            //不透明度
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"不透明度";
-        }
-            break;
-        case 15:{
-            //提亮阴影
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"show";
-            
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"heighlight";
-        }
-            break;
-        case 16:{
-            //色彩替换（替换亮部和暗部色彩）
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"red";
-            
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"green";
-            
-            self.slider3.minimumValue = 0.0;
-            self.slider3.maximumValue = 1.0;
-            self.title3.text = @"blue";
-        }
-            break;
-        case 17:{
-            //色度
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"色度";
-        }
-            break;
-        case 18:{
-            //色度键
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"red";
-            
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"green";
-            
-            self.slider3.minimumValue = 0.0;
-            self.slider3.maximumValue = 1.0;
-            self.title3.text = @"blue";
-        }
-            break;
-        case 19:{
-            //白平横
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 5000.0;
-            self.title1.text = @"temperature";
-            
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1000.0;
-            self.title2.text = @"tint";
-        }
-            break;
-        case 20:{
-            //像素平均色值
+        case 7:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+            self.slider3.maximumValue = 1;
 
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = false;
             break;
-        case 21:{
-            //纯色
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 1.0;
-            self.title1.text = @"red";
-            
-            self.slider2.minimumValue = 0.0;
-            self.slider2.maximumValue = 1.0;
-            self.title2.text = @"green";
-            
-            self.slider3.minimumValue = 0.0;
-            self.slider3.maximumValue = 1.0;
-            self.title3.text = @"blue";
-        }
-            break;
-        case 22:{
-            //亮度平均
+        case 8:
+            self.slider1.maximumValue = 1;
 
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
             break;
-        case 23:{
-            //像素色值亮度平均，图像黑白（有类似漫画效果）
-            self.slider1.minimumValue = 0.0;
-            self.slider1.maximumValue = 5000.0;
-//            self.title1.text = @"temperature";
-        }
-            break;
-        case 24:{
-            //lookup 色彩调整
+        case 9:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
 
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
             break;
-        case 25:{
-            //Amatorka lookup
+        case 10:
+            self.slider1.maximumValue = 5000;
+            self.slider2.maximumValue = 100;
 
-        }
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
             break;
-        case 26:{
-            //MissEtikate looku
+        case 11:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
 
-        }
+            self.slider1.hidden = true;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            [self processImage:index];
+
             break;
-        case 27:{
-            //SoftElegance looku
+        case 12:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
 
-        }
+            self.slider1.hidden = true;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            [self processImage:index];
+
+            break;
+        case 13:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+
+            self.slider1.hidden = true;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            [self processImage:index];
+
+            break;
+        case 14:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+
+            self.slider1.hidden = true;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            [self processImage:index];
             break;
         default:
             break;
     }
 }
+
+-(void)processImage:(NSInteger)index {
+    switch (index) {
+        case 0:
+            self.imageView.image = [PTColorEffectFilters brightnessFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 1:
+            self.imageView.image = [PTColorEffectFilters exposureFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 2:
+            self.imageView.image = [PTColorEffectFilters contrastFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 3:
+            self.imageView.image = [PTColorEffectFilters saturationFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 4:
+            self.imageView.image = [PTColorEffectFilters gammaFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 5:
+            self.imageView.image = [PTColorEffectFilters sepiaFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 6:
+            self.imageView.image = [PTColorEffectFilters grayscaleFilter:self.sourceImage];
+            break;
+        case 7:
+            self.imageView.image = [PTColorEffectFilters rgbFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
+            break;
+        case 8:
+            self.imageView.image = [PTColorEffectFilters opacityFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 9:
+            self.imageView.image = [PTColorEffectFilters highlightShadowFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 10:
+            self.imageView.image = [PTColorEffectFilters whiteBalanceFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 11:
+            self.imageView.image = [PTColorEffectFilters amatorkaFilter:self.sourceImage];
+            break;
+        case 12:
+            self.imageView.image = [PTColorEffectFilters missEtikateFilter:self.sourceImage];
+            break;
+        case 13:
+            self.imageView.image = [PTColorEffectFilters softEleganceFilter:self.sourceImage];
+            break;
+        case 14:
+            self.imageView.image = [PTColorEffectFilters nashvilleFilter:self.sourceImage];
+            break;
+        default:
+            break;
+    }
+}
+
 
 @end

@@ -11,13 +11,22 @@
 #import <Masonry/Masonry.h>
 #import "TYCyclePagerViewCell.h"
 #import "PTImageEffectManager.h"
+#import "PTViewEffectFilters.h"
 
 @interface PTImageEditViewController ()<TZImagePickerControllerDelegate,TYCyclePagerViewDataSource,TYCyclePagerViewDelegate>
-@property(nonatomic, weak)IBOutlet UIButton * add;
-@property(nonatomic, weak)IBOutlet UIImageView * imageView;
+@property(nonatomic, strong) UIButton * add;
+@property(nonatomic, strong)UIImageView * imageView;
 @property(nonatomic, strong) TYCyclePagerView * menu;
 @property(nonatomic, strong) NSArray * items;
 @property(nonatomic, strong) UIImage * sourceImage;
+
+@property(nonatomic, strong) UISlider * slider1;
+
+@property(nonatomic, strong) UISlider * slider2;
+
+@property(nonatomic, strong) UISlider * slider3;
+
+@property(nonatomic, assign) NSInteger  currentIndex;
 
 @end
 
@@ -25,10 +34,85 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
+    self.navigationController.navigationBar.translucent = NO;
     // Do any additional setup after loading the view.
+    
+    self.imageView = [[UIImageView alloc] init];
+    [self.view addSubview:self.imageView];
+    self.imageView.clipsToBounds = YES;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageView.backgroundColor = [UIColor blackColor];
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.bottom.equalTo(self.view);
+    }];
+    
+    self.slider1 = [[UISlider alloc] init];
+    self.slider1.minimumValue = 0.0;
+    self.slider1.tag = 0;
+    [self.view addSubview:self.slider1];
+    [self.slider1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(40);
+        make.right.equalTo(self.view).offset(-40);
+        make.top.equalTo(self.view).offset(20);
+    }];
+    [self.slider1 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider1 setContinuous:true];
+
+    
+    self.slider2 = [[UISlider alloc] init];
+    self.slider2.minimumValue = 0.0;
+    self.slider2.tag = 1;
+    [self.view addSubview:self.slider2];
+    [self.slider2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.slider1);
+        make.top.equalTo(self.slider1.mas_bottom).offset(20);
+    }];
+    [self.slider2 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider2 setContinuous:true];
+
+    self.slider3 = [[UISlider alloc] init];
+    self.slider3.minimumValue = 0.0;
+    self.slider3.tag = 2;
+    [self.view addSubview:self.slider3];
+    [self.slider3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.slider1);
+        make.top.equalTo(self.slider2.mas_bottom).offset(20);
+    }];
+    [self.slider3 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.slider3 setContinuous:true];
+
+    self.add = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.add setTitle:@"添加图片" forState:UIControlStateNormal];
+    [self.add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.add addTarget:self action:@selector(addImageAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.add];
+    [self.add mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.width.height.equalTo(@100);
+    }];
+    
+    self.items = @[@"素描",@"阀值素描，形成有噪点的素描",@"卡通效果（黑色粗线描边)",@"卡通效果平滑",@"桑原(Kuwahara)滤波,水粉画的模糊效果",@"漩涡",@"鱼眼效果",@"凹面镜",@"水晶球效果",@"浮雕效果3d",@"锐化",@"背景模糊"];//@"Instagram风格"];
     [self.view addSubview:self.menu];
-    self.items = @[@"素描",@"阀值素描，形成有噪点的素描",@"卡通效果（黑色粗线描边)",@"卡通效果平滑",@"桑原(Kuwahara)滤波,水粉画的模糊效果",@"黑白马赛克",@"像素化",@"同心圆像素化",@"交叉线阴影，形成黑白网状画面",@"色彩丢失，模糊（类似监控摄像效果",@"晕影，形成黑色圆形边缘，突出中间图像的效果",@"漩涡，中间形成卷曲的画面",@"凸起失真，鱼眼效果",@"收缩失真，凹面镜",@"伸展失真，哈哈镜",@"水晶球效果",@"球形折射，图形倒立",@"色调分离，形成噪点效果",@"CGA色彩滤镜，形成黑、浅蓝、紫色块的画面",@"柏林噪点，花边噪点",@"3x3卷积，高亮大色块变黑，加亮边缘、线条等",@"浮雕效果，带有点3d的感觉",@"像素圆点花样",@"点染,图像黑白化，由黑点构成原"];//@"Instagram风格"];
+    [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        if (@available(iOS 11.0,*)){
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        }else{
+            make.bottom.equalTo(self.mas_bottomLayoutGuide);
+        }
+        make.height.mas_equalTo(80);
+    }];
+    self.currentIndex = INT_MAX;
     [self.menu reloadData];
+}
+
+-(void)sliderValueChanged:(UISlider *)slider
+{
+    if (self.sourceImage == nil || self.currentIndex == INT_MAX) {
+        return;
+    }
+    [self processImage:self.currentIndex];
 }
 
 
@@ -44,19 +128,6 @@
     return _menu;
 }
 
--(void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    
-    [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        if (@available(iOS 11.0,*)){
-            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
-        }else{
-            make.bottom.equalTo(self.mas_bottomLayoutGuide);
-        }
-        make.height.mas_equalTo(80);
-    }];
-}
 
 -(IBAction)addImageAction:(id)sender {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:0 columnNumber:4 delegate:self pushPhotoPickerVc:true];
@@ -104,10 +175,161 @@
 }
 
 - (void)pagerView:(TYCyclePagerView *)pageView didSelectedItemCell:(__kindof UICollectionViewCell *)cell atIndex:(NSInteger)index {
+    self.slider1.value = 0;
+    self.slider2.value = 0;
+    self.slider3.value = 0;
+
     if (self.sourceImage == nil) {
         return;
     }
-    self.imageView.image = [[PTImageEffectManager shareInstance] visualEffectImage:self.sourceImage withType:index];
+    self.imageView.image = self.sourceImage;
+    self.currentIndex = index;
+    [self setSliderConfig:index];
+//    self.imageView.image = [[PTImageEffectManager shareInstance] visualEffectImage:self.sourceImage withType:index];
+}
+
+-(void)setSliderConfig:(NSInteger)index {
+    switch (index) {
+        case 0:
+            self.slider1.maximumValue = 0.01;
+            self.slider2.maximumValue = 0.01;
+            self.slider3.maximumValue = 10;
+            break;
+        case 1:
+            self.slider1.maximumValue = 1;
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+
+            break;
+        case 2:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 10;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            break;
+        case 3:
+            self.slider1.maximumValue = 5;
+            self.slider2.maximumValue = 1;
+            self.slider3.maximumValue = 100;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = false;
+            break;
+        case 4:
+            self.slider1.maximumValue = 5;
+            self.slider2.maximumValue = 1;
+            self.slider3.maximumValue = 20;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 5:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            break;
+        case 6:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+            self.slider2.minimumValue = -1;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            break;
+        case 7:
+            self.slider1.maximumValue = 2;
+            self.slider2.maximumValue = 2;
+            self.slider2.minimumValue = -2;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            break;
+        case 8:
+            self.slider1.maximumValue = 1;
+            self.slider2.maximumValue = 1;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            break;
+        case 9:
+            self.slider1.maximumValue = 4;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 10:
+            self.slider1.maximumValue = 4;
+            self.slider1.minimumValue = -4;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 11:
+            self.slider1.maximumValue = 20;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)processImage:(NSInteger)index {
+    switch (index) {
+        case 0:
+            self.imageView.image = [PTViewEffectFilters sketchFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
+            break;
+        case 1:
+            self.imageView.image = [PTViewEffectFilters thresholdSketchFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 2:
+            self.imageView.image = [PTViewEffectFilters cartoonFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 3:
+            self.imageView.image = [PTViewEffectFilters smoothCartoonFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
+            break;
+        case 4:
+            self.imageView.image = [PTViewEffectFilters kuwaharaFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 5:
+            self.imageView.image = [PTViewEffectFilters swirlFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 6:
+            self.imageView.image = [PTViewEffectFilters bulgeDistortionFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 7:
+            self.imageView.image = [PTViewEffectFilters pinchDistortionFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 8:
+            self.imageView.image = [PTViewEffectFilters glassSphereFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
+            break;
+        case 9:
+            self.imageView.image = [PTViewEffectFilters embossFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 10:
+            self.imageView.image = [PTViewEffectFilters sharpenFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 11:
+            self.imageView.image = [PTViewEffectFilters bilateralFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        default:
+            break;
+    }
 }
 
 
