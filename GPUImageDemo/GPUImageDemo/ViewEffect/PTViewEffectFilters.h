@@ -102,6 +102,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param isAuto <#isAuto description#>
 + (UIImage *)bilateralFilter:(UIImage *)image value1:(CGFloat)distanceNormalizationFactor  isAuto:(BOOL)isAuto;
 
+
+/// 漫画的反色效果
+/// @param image <#image description#>
+/// @param edgeStrength 0~10
+/// @param isAuto <#isAuto description#>
++ (UIImage *)sobelEdgeDetectionFilter:(UIImage *)image value1:(CGFloat)edgeStrength  isAuto:(BOOL)isAuto;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

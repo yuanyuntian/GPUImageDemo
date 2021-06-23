@@ -204,4 +204,18 @@
     return [filter imageFromCurrentFramebuffer];
 }
 
++ (UIImage *)sobelEdgeDetectionFilter:(UIImage *)image value1:(CGFloat)edgeStrength  isAuto:(BOOL)isAuto {
+    GPUImageSobelEdgeDetectionFilter * filter = [GPUImageSobelEdgeDetectionFilter new];
+    if (!isAuto) {
+        filter.edgeStrength = edgeStrength;
+    }
+    [filter forceProcessingAtSize:image.size];
+    [filter useNextFrameForImageCapture];
+
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+    [stillImageSource addTarget:filter];
+    [stillImageSource processImage];
+    return [filter imageFromCurrentFramebuffer];
+}
+
 @end
