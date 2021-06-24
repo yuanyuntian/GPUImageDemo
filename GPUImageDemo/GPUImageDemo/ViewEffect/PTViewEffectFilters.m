@@ -256,4 +256,68 @@
     
 }
 
+
++ (UIImage *)sobelEdgeDetectionAndcolorInvertFilter:(UIImage *)image value1:(CGFloat)edgeStrength  isAuto:(BOOL)isAuto {
+        GPUImageSobelEdgeDetectionFilter * filter = [GPUImageSobelEdgeDetectionFilter new];
+        if (!isAuto) {
+            filter.edgeStrength = edgeStrength;
+        }
+        GPUImageColorInvertFilter * invertFilter = [GPUImageColorInvertFilter new];
+    
+        GPUImageFilterGroup * group = [GPUImageFilterGroup new];
+        [group addFilter:filter];
+        [group addFilter:invertFilter];
+        [filter addTarget:invertFilter];
+        group.initialFilters = @[filter];
+        group.terminalFilter = invertFilter;
+        [group forceProcessingAtSize:image.size];
+    
+        GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+        [stillImageSource addTarget:group];
+        [group useNextFrameForImageCapture];
+        [stillImageSource processImage];
+        return [group imageFromCurrentFramebuffer];
+}
+
+
+
+
++ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation  isAuto:(BOOL)isAuto {
+    
+    GPUImageUnsharpMaskFilter * filter1 = [GPUImageUnsharpMaskFilter new];
+    if (!isAuto) {
+        filter1.blurRadiusInPixels = blurRadiusInPixels;
+        filter1.intensity = intensity;
+
+    }
+    
+    GPUImageSaturationFilter * filter2 = [GPUImageSaturationFilter new];
+    if (!isAuto) {
+        filter2.saturation = saturation;
+    }
+
+    GPUImageBilateralFilter * filter3 = [GPUImageBilateralFilter new];
+    if (!isAuto) {
+//        filter3.distanceNormalizationFactor = distanceNormalizationFactor;
+    }
+    GPUImageFilterGroup * group = [GPUImageFilterGroup new];
+    [group addFilter:filter1];
+    [group addFilter:filter2];
+    [group addFilter:filter3];
+
+    [filter1 addTarget:filter2];
+    
+    [filter2 addTarget:filter3];
+
+    group.initialFilters = @[filter1];
+    group.terminalFilter = filter3;
+    [group forceProcessingAtSize:image.size];
+
+    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+    [stillImageSource addTarget:group];
+    [group useNextFrameForImageCapture];
+    [stillImageSource processImage];
+    return [group imageFromCurrentFramebuffer];
+}
+    
 @end

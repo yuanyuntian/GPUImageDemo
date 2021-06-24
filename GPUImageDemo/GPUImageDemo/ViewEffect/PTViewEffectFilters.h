@@ -110,6 +110,21 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)sobelEdgeDetectionFilter:(UIImage *)image value1:(CGFloat)edgeStrength  isAuto:(BOOL)isAuto;
 
 
+/// 边缘检测+颜色自反
+/// @param image <#image description#>
+/// @param edgeStrength edgeStrength 0~10
+/// @param isAuto <#isAuto description#>
++ (UIImage *)sobelEdgeDetectionAndcolorInvertFilter:(UIImage *)image value1:(CGFloat)edgeStrength  isAuto:(BOOL)isAuto;
+
+
+
+/// <#Description#>
+/// @param image <#image description#>
+/// @param blurRadiusInPixels The blur radius of the underlying Gaussian blur. The default is 4.0.
+/// @param intensity The strength of the sharpening, from 0.0 on up, with a default of 1.0
+/// @param saturation <#saturation description#>
+/// @param isAuto <#isAuto description#>
++ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation  isAuto:(BOOL)isAuto;
 
 @end
 

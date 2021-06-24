@@ -92,7 +92,7 @@
         make.width.height.equalTo(@100);
     }];
     
-    self.items = @[@"素描",@"阀值素描，形成有噪点的素描",@"卡通效果（黑色粗线描边)",@"卡通效果平滑",@"桑原(Kuwahara)滤波,水粉画的模糊效果",@"漩涡",@"鱼眼效果",@"凹面镜",@"水晶球效果",@"浮雕效果3d",@"锐化",@"背景模糊",@"漫画反色"];//@"Instagram风格"];
+    self.items = @[@"素描",@"阀值素描，形成有噪点的素描",@"卡通效果（黑色粗线描边)",@"卡通效果平滑",@"桑原(Kuwahara)滤波,水粉画的模糊效果",@"漩涡",@"鱼眼效果",@"凹面镜",@"水晶球效果",@"浮雕效果3d",@"锐化",@"背景模糊",@"漫画反色",@"边缘检测+颜色自反",@"自定义"];//@"Instagram风格"];
     [self.view addSubview:self.menu];
     [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -291,6 +291,22 @@
             self.slider2.hidden = true;
             self.slider3.hidden = true;
             break;
+        case 13:
+            self.slider1.maximumValue = 10;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = true;
+            self.slider3.hidden = true;
+            break;
+        case 14:
+            self.slider1.maximumValue = 10;
+            self.slider2.maximumValue = 5;
+            self.slider3.maximumValue = 2;
+
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = false;
+            break;
         default:
             break;
     }
@@ -308,7 +324,7 @@
             self.imageView.image = [PTViewEffectFilters cartoonFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value isAuto:false];
             break;
         case 3:
-            self.imageView.image = [PTViewEffectFilters smoothCartoonFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:true];
+            self.imageView.image = [PTViewEffectFilters smoothCartoonFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
             break;
         case 4:
             self.imageView.image = [PTViewEffectFilters kuwaharaFilter:self.sourceImage value1:self.slider1.value isAuto:false];
@@ -336,6 +352,12 @@
             break;
         case 12:
             self.imageView.image = [PTViewEffectFilters sobelEdgeDetectionFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 13:
+            self.imageView.image = [PTViewEffectFilters sobelEdgeDetectionAndcolorInvertFilter:self.sourceImage value1:self.slider1.value isAuto:false];
+            break;
+        case 14:
+            self.imageView.image = [PTViewEffectFilters cartoonCustomFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
             break;
         default:
             break;
