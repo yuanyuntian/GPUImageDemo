@@ -216,6 +216,44 @@
     [stillImageSource addTarget:filter];
     [stillImageSource processImage];
     return [filter imageFromCurrentFramebuffer];
+    
+    //组合滤镜
+//    GPUImageSobelEdgeDetectionFilter * filter = [GPUImageSobelEdgeDetectionFilter new];
+//    if (!isAuto) {
+//        filter.edgeStrength = edgeStrength;
+//    }
+//    [filter forceProcessingAtSize:image.size];
+//
+//    GPUImageColorInvertFilter * invertFilter = [GPUImageColorInvertFilter new];
+//    [invertFilter forceProcessingAtSize:image.size];
+//    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+//    [stillImageSource addTarget:filter];
+//    [filter addTarget:invertFilter];
+//    [invertFilter useNextFrameForImageCapture];
+//
+//    [stillImageSource processImage];
+//    return [invertFilter imageFromCurrentFramebuffer];
+    
+    
+//    GPUImageSobelEdgeDetectionFilter * filter = [GPUImageSobelEdgeDetectionFilter new];
+//    if (!isAuto) {
+//        filter.edgeStrength = edgeStrength;
+//    }
+//    GPUImageColorInvertFilter * invertFilter = [GPUImageColorInvertFilter new];
+//    GPUImageFilterGroup * group = [GPUImageFilterGroup new];
+//    [group addFilter:filter];
+//    [group addFilter:invertFilter];
+//    [filter addTarget:invertFilter];
+//    group.initialFilters = @[filter];
+//    group.terminalFilter = invertFilter;
+//    [group forceProcessingAtSize:image.size];
+//
+//    GPUImagePicture * stillImageSource = [[GPUImagePicture alloc] initWithImage:image];
+//    [stillImageSource addTarget:group];
+//    [group useNextFrameForImageCapture];
+//    [stillImageSource processImage];
+//    return [group imageFromCurrentFramebuffer];
+    
 }
 
 @end
