@@ -14,6 +14,8 @@
 		8622AC9925FF66890047AB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8622AC9825FF66890047AB11 /* Assets.xcassets */; };
 		8622AC9C25FF66890047AB11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8622AC9A25FF66890047AB11 /* LaunchScreen.storyboard */; };
 		8622AC9F25FF66890047AB11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8622AC9E25FF66890047AB11 /* main.m */; };
+		866E06EC2685D26600BC5CD7 /* PTImageBlendFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 866E06EB2685D26600BC5CD7 /* PTImageBlendFilters.m */; };
+		866E06EF2685E02500BC5CD7 /* PTImageBlendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 866E06EE2685E02500BC5CD7 /* PTImageBlendViewController.m */; };
 		8673933B25FF703400C13B07 /* PTImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673933A25FF703400C13B07 /* PTImageEditViewController.m */; };
 		8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */; };
 		867472FB2671FA0600293516 /* camra_beauty@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 867472F32671FA0600293516 /* camra_beauty@3x.png */; };
@@ -81,6 +83,10 @@
 		8622AC9B25FF66890047AB11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8622AC9D25FF66890047AB11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8622AC9E25FF66890047AB11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		866E06EA2685D26600BC5CD7 /* PTImageBlendFilters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageBlendFilters.h; sourceTree = "<group>"; };
+		866E06EB2685D26600BC5CD7 /* PTImageBlendFilters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageBlendFilters.m; sourceTree = "<group>"; };
+		866E06ED2685E02500BC5CD7 /* PTImageBlendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageBlendViewController.h; sourceTree = "<group>"; };
+		866E06EE2685E02500BC5CD7 /* PTImageBlendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageBlendViewController.m; sourceTree = "<group>"; };
 		8673933925FF703400C13B07 /* PTImageEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTImageEditViewController.h; sourceTree = "<group>"; };
 		8673933A25FF703400C13B07 /* PTImageEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTImageEditViewController.m; sourceTree = "<group>"; };
 		867394482600B3F800C13B07 /* TYCyclePagerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYCyclePagerViewCell.m; sourceTree = "<group>"; };
@@ -251,6 +257,8 @@
 				86D04D022601E90200D1E776 /* PTColorProcessController.m */,
 				86D4109326032C6400CF120F /* PTCustomFilterController.h */,
 				86D4109426032C6400CF120F /* PTCustomFilterController.m */,
+				866E06ED2685E02500BC5CD7 /* PTImageBlendViewController.h */,
+				866E06EE2685E02500BC5CD7 /* PTImageBlendViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -460,6 +468,8 @@
 				86AD860226818843006EDCDB /* PTViewEffectFilters.m */,
 				86AD860426819F30006EDCDB /* PTColorEffectFilters.h */,
 				86AD860526819F30006EDCDB /* PTColorEffectFilters.m */,
+				866E06EA2685D26600BC5CD7 /* PTImageBlendFilters.h */,
+				866E06EB2685D26600BC5CD7 /* PTImageBlendFilters.m */,
 			);
 			path = ViewEffect;
 			sourceTree = "<group>";
@@ -635,6 +645,7 @@
 				86AD860626819F30006EDCDB /* PTColorEffectFilters.m in Sources */,
 				8673944A2600B3F800C13B07 /* TYCyclePagerViewCell.m in Sources */,
 				86AD3A212671F20F001C5933 /* parseurl.c in Sources */,
+				866E06EC2685D26600BC5CD7 /* PTImageBlendFilters.m in Sources */,
 				86AD374A2671EFA3001C5933 /* LFH264VideoEncoder.mm in Sources */,
 				868EADF92608910F00EDACC5 /* PTGPUImageSketchFilter.m in Sources */,
 				86AD860326818843006EDCDB /* PTViewEffectFilters.m in Sources */,
@@ -648,6 +659,7 @@
 				86AD37412671EFA3001C5933 /* LFLiveDebug.m in Sources */,
 				86D4109526032C6400CF120F /* PTCustomFilterController.m in Sources */,
 				86AD3A1D2671F20F001C5933 /* log.c in Sources */,
+				866E06EF2685E02500BC5CD7 /* PTImageBlendViewController.m in Sources */,
 				86AD3A1E2671F20F001C5933 /* hashswf.c in Sources */,
 				8622AC9F25FF66890047AB11 /* main.m in Sources */,
 				86AD373A2671EFA3001C5933 /* LFLiveVideoConfiguration.m in Sources */,

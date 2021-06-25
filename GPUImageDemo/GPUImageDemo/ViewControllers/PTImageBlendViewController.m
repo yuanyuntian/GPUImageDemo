@@ -5,15 +5,16 @@
 //  Created by Fei Yuan on 2021/3/15.
 //
 
-#import "PTImageEditViewController.h"
+#import "PTImageBlendViewController.h"
 #import <TZImagePickerController/TZImagePickerController.h>
 #import <TYCyclePagerView/TYCyclePagerView-umbrella.h>
 #import <Masonry/Masonry.h>
 #import "TYCyclePagerViewCell.h"
 #import "PTImageEffectManager.h"
 #import "PTViewEffectFilters.h"
+#import "PTImageBlendFilters.h"
 
-@interface PTImageEditViewController ()<TZImagePickerControllerDelegate,TYCyclePagerViewDataSource,TYCyclePagerViewDelegate>
+@interface PTImageBlendViewController ()<TZImagePickerControllerDelegate,TYCyclePagerViewDataSource,TYCyclePagerViewDelegate>
 @property(nonatomic, strong) UIButton * add;
 @property(nonatomic, strong)UIImageView * imageView;
 @property(nonatomic, strong) TYCyclePagerView * menu;
@@ -33,7 +34,7 @@
 
 @end
 
-@implementation PTImageEditViewController
+@implementation PTImageBlendViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -102,13 +103,14 @@
     [self.add setTitle:@"添加图片" forState:UIControlStateNormal];
     [self.add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.add addTarget:self action:@selector(addImageAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.add.hidden = true;
     [self.view addSubview:self.add];
     [self.add mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.width.height.equalTo(@100);
     }];
     
-    self.items = @[@"素描",@"阀值素描，形成有噪点的素描",@"卡通效果（黑色粗线描边)",@"卡通效果平滑",@"桑原(Kuwahara)滤波,水粉画的模糊效果",@"漩涡",@"鱼眼效果",@"凹面镜",@"水晶球效果",@"浮雕效果3d",@"锐化",@"背景模糊",@"漫画反色",@"边缘检测+颜色自反",@"自定义"];//@"Instagram风格"];
+    self.items = @[@"选择性替换"];//@"Instagram风格"];
     [self.view addSubview:self.menu];
     [self.menu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -125,7 +127,7 @@
 
 -(void)sliderValueChanged:(UISlider *)slider
 {
-    if (self.sourceImage == nil || self.currentIndex == INT_MAX) {
+    if (self.currentIndex == INT_MAX) {
         return;
     }
     [self processImage:self.currentIndex];
@@ -195,21 +197,25 @@
     self.slider2.value = 0;
     self.slider3.value = 0;
 
-    if (self.sourceImage == nil) {
-        return;
-    }
-    self.imageView.image = self.sourceImage;
+//    if (self.sourceImage == nil) {
+//        return;
+//    }
+//    self.imageView.image = self.sourceImage;
     self.currentIndex = index;
     [self setSliderConfig:index];
-//    self.imageView.image = [[PTImageEffectManager shareInstance] visualEffectImage:self.sourceImage withType:index];
+//    self.imageView.image = [PTImageBlendFilters chromaKeyBlendFilter:[UIImage imageNamed:@"source"] backgroundImage:[UIImage imageNamed:@"background"] value1:self.slider1.value value2:self.slider2.value isAuto:true];
 }
 
 -(void)setSliderConfig:(NSInteger)index {
     switch (index) {
         case 0:
-            self.slider1.maximumValue = 0.01;
-            self.slider2.maximumValue = 0.01;
-            self.slider3.maximumValue = 10;
+            self.slider1.maximumValue = 1.0;
+            self.slider2.maximumValue = 1.0;
+            
+            self.slider1.hidden = false;
+            self.slider2.hidden = false;
+            self.slider3.hidden = true;
+            
             break;
         case 1:
             self.slider1.maximumValue = 1;
@@ -333,7 +339,7 @@
 -(void)processImage:(NSInteger)index {
     switch (index) {
         case 0:
-            self.imageView.image = [PTViewEffectFilters sketchFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value isAuto:false];
+            self.imageView.image = [PTImageBlendFilters chromaKeyBlendFilter:[UIImage imageNamed:@"source"] backgroundImage:[UIImage imageNamed:@"background"] value1:self.slider1.value value2:self.slider2.value isAuto:false];
             break;
         case 1:
             self.imageView.image = [PTViewEffectFilters thresholdSketchFilter:self.sourceImage value1:self.slider1.value isAuto:false];
@@ -375,7 +381,7 @@
             self.imageView.image = [PTViewEffectFilters sobelEdgeDetectionAndcolorInvertFilter:self.sourceImage value1:self.slider1.value isAuto:false];
             break;
         case 14:
-            self.imageView.image = [PTViewEffectFilters cartoonCustomFilter:self.sourceImage value1:self.slider1.value value2:self.slider2.value value3:self.slider3.value value4:self.slider4.value isAuto:false];
+            self.imageView.image = [PTImageBlendFilters chromaKeyBlendFilter:[UIImage imageNamed:@"source"] backgroundImage:[UIImage imageNamed:@"backgournd"] value1:self.slider1.value value2:self.slider2.value isAuto:false];
             break;
         default:
             break;

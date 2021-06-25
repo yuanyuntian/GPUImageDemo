@@ -13,7 +13,7 @@
 //#import "PTVideoProcessController.h"
 //#import "PTH264EncoderController.h"
 #import "PTPushLiveViewController.h"
-
+#import "PTImageBlendViewController.h"
 
 
 
@@ -75,10 +75,10 @@
         //自定义滤镜
         PTCustomFilterController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTCustomFilterController"];
         [self.navigationController pushViewController:imageVC animated:true];
-    }else if (indexPath.row == 5) {
+    }else if (indexPath.row == 3) {
         //
-//        PTVideoProcessController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTVideoProcessController"];
-//        [self.navigationController pushViewController:imageVC animated:true];
+        PTImageBlendViewController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTImageBlendViewController"];
+        [self.navigationController pushViewController:imageVC animated:true];
     }else if (indexPath.row == 6) {
         //
 //        PTH264EncoderController * imageVC = [board instantiateViewControllerWithIdentifier:@"PTH264EncoderController"];

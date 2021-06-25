@@ -124,8 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param intensity The strength of the sharpening, from 0.0 on up, with a default of 1.0
 /// @param saturation <#saturation description#>
 /// @param isAuto <#isAuto description#>
-+ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation  isAuto:(BOOL)isAuto;
-
++ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation value4:(CGFloat)distanceNormalizationFactor isAuto:(BOOL)isAuto;
 @end
 
 NS_ASSUME_NONNULL_END

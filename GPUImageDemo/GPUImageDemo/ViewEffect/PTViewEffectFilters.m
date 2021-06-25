@@ -282,7 +282,7 @@
 
 
 
-+ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation  isAuto:(BOOL)isAuto {
++ (UIImage *)cartoonCustomFilter:(UIImage *)image value1:(CGFloat)blurRadiusInPixels value2:(CGFloat)intensity value3:(CGFloat)saturation value4:(CGFloat)distanceNormalizationFactor isAuto:(BOOL)isAuto {
     
     GPUImageUnsharpMaskFilter * filter1 = [GPUImageUnsharpMaskFilter new];
     if (!isAuto) {
@@ -298,7 +298,7 @@
 
     GPUImageBilateralFilter * filter3 = [GPUImageBilateralFilter new];
     if (!isAuto) {
-//        filter3.distanceNormalizationFactor = distanceNormalizationFactor;
+        filter3.distanceNormalizationFactor = distanceNormalizationFactor;
     }
     GPUImageFilterGroup * group = [GPUImageFilterGroup new];
     [group addFilter:filter1];
